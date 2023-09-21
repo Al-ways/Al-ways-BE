@@ -1,6 +1,5 @@
-package com.project.always.domain.surbey;
+package com.project.always.domain.survey;
 
-import com.project.always.domain.BaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
