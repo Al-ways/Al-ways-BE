@@ -1,5 +1,9 @@
 package com.project.always.domain.member;
 
+import static com.project.always.security.oauth.enums.AuthProvider.KAKAO;
+
+import com.project.always.security.oauth.entity.User;
+import com.project.always.security.oauth.repository.UserRepository;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.groups.Tuple;
@@ -12,36 +16,39 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 @SpringBootTest
-class MemberRepositoryTest {
+class UserRepositoryTest {
 
     @Autowired
-    private MemberRepository memberRepository;
+    private UserRepository userRepository;
 
     @AfterEach
     void tearDown() {
-        memberRepository.deleteAllInBatch();
+        userRepository.deleteAllInBatch();
     }
 
     @DisplayName("회원 DB 조회")
     @Test
     void memberInfoReader() throws Exception{
         //given
-        Member member = Member.builder()
+        User user = User.builder()
                 .email("cobi@naver.com")
                 .password("cobi1234")
                 .name("cobi")
+                .authProvider(KAKAO)
+                .oauth2Id("oauth2IdTest1")
                 .build();
-        memberRepository.save(member);
+        userRepository.save(user);
+
 
         //when
-        List<Member> memberList = memberRepository.findAll();
+        List<User> userList = userRepository.findAll();
 
         //then
-        Assertions.assertThat(memberList).hasSize(2)
-                .extracting("email","password","name")
+        Assertions.assertThat(userList).hasSize(2)
+                .extracting("email","password","name","authProvider")
                 .containsExactlyInAnyOrder(
-                        Tuple.tuple("test@naver.com", "test1234", "testId"),
-                        Tuple.tuple("cobi@naver.com", "cobi1234", "cobi")
+                        Tuple.tuple("test@naver.com", "test1234", "testId",KAKAO),
+                        Tuple.tuple("cobi@naver.com", "cobi1234", "cobi",KAKAO)
                 );
 
     }
