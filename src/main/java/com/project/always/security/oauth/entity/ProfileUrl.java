@@ -1,4 +1,4 @@
-package com.project.always.domain.member;
+package com.project.always.security.oauth.entity;
 
 import javax.persistence.Embeddable;
 import lombok.Getter;

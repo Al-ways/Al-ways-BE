@@ -4,23 +4,34 @@ import com.project.always.security.oauth.enums.AuthProvider;
 import com.project.always.security.oauth.enums.Role;
 import com.project.always.security.oauth.oauth2.OAuth2UserInfo;
 
+import com.project.always.utils.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
 
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
+import java.util.Random;
+import java.util.UUID;
+
+import static com.project.always.security.oauth.enums.Role.ROLE_GUEST;
+
+
 @Entity
-public class User extends BaseDateEntity {
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class User extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
 
+    @Column(length = 50, nullable = false, unique = true)
     private String email;
 
+    @Column(length = 20, nullable = false)
+    private String password;
+
+    @Column(length = 20, nullable = false)
     private String name;
 
     private String oauth2Id;
@@ -37,4 +48,16 @@ public class User extends BaseDateEntity {
 
         return this;
     }
+    @Builder
+    private User(final String email, final String password, final String name,
+                 final AuthProvider authProvider, final String oauth2Id, final Role role) {
+        this.email = email;
+        this.password = String.valueOf(UUID.randomUUID());
+        this.name = name;
+        this.authProvider = authProvider;
+        this.oauth2Id = oauth2Id;
+        this.role = ROLE_GUEST; // to do
+    }
+
+
 }

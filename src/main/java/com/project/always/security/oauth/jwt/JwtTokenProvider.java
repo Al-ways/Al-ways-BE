@@ -1,6 +1,5 @@
 package com.project.always.security.oauth.jwt;
 
-import com.project.always.security.oauth.config.ExpireTime;
 import com.project.always.security.oauth.dto.UserResponseDto;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -17,8 +16,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
@@ -34,22 +35,35 @@ public class JwtTokenProvider {
     private static final String TYPE_REFRESH = "refresh";
 
     private final Key key;
+    @Value("${jwt.token.validity-in-seconds}")
+    private long validityInMilliseconds;
+
 
     //The specified key byte array is 248 bits which is not secure enough for any JWT HMAC-SHA algorithm.
     // The JWT JWA Specification (RFC 7518, Section 3.2) states that keys used with HMAC-SHA algorithms MUST have a size >= 256 bits (the key size must be greater than or equal to the hash output size).
     // Consider using the io.jsonwebtoken.security.Keys#secretKeyFor(SignatureAlgorithm) method to create a key guaranteed to be secure enough for your preferred HMAC-SHA algorithm.
-    public JwtTokenProvider(@Value("${oauth.jwt.secret}") String secretKey) {
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-        this.key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    public JwtTokenProvider(@Value("${jwt.token.secret-key}") String secretKey) {
+
+        // 문자열을 바이트 배열로 변환
+        byte[] bytesToEncode = secretKey.getBytes(StandardCharsets.UTF_8);
+
+        // Base64로 인코딩
+        String encodedString = Base64.getEncoder().encodeToString(bytesToEncode);
+
+        byte[] keyBytes = Decoders.BASE64.decode(encodedString);
+        this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    //Authentication 을 가지고 AccessToken, RefreshToken 을 생성하는 메서드
-    public UserResponseDto.TokenInfo generateToken(Authentication authentication) {
+    public UserResponseDto generateToken(Authentication authentication) {
+        log.info("generateToken authentication ={}", authentication);
+        log.info("generateToken authentication ={}", authentication.getAuthorities());
+        log.info("generateToken authentication ={}", authentication.getPrincipal());
         return generateToken(authentication.getName(), authentication.getAuthorities());
     }
 
+
     //name, authorities 를 가지고 AccessToken, RefreshToken 을 생성하는 메서드
-    public UserResponseDto.TokenInfo generateToken(String name, Collection<? extends GrantedAuthority> inputAuthorities) {
+    public UserResponseDto generateToken(String name, Collection<? extends GrantedAuthority> inputAuthorities) {
         //권한 가져오기
         String authorities = inputAuthorities.stream()
                 .map(GrantedAuthority::getAuthority)
@@ -62,8 +76,8 @@ public class JwtTokenProvider {
                 .setSubject(name)
                 .claim(AUTHORITIES_KEY, authorities)
                 .claim("type", TYPE_ACCESS)
-                .setIssuedAt(now)   //토큰 발행 시간 정보
-                .setExpiration(new Date(now.getTime() + ExpireTime.ACCESS_TOKEN_EXPIRE_TIME))  //토큰 만료 시간 설정
+                .setIssuedAt(now)
+                .setExpiration(new Date(now.getTime() + validityInMilliseconds))  //토큰 만료 시간 설정
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
@@ -71,16 +85,16 @@ public class JwtTokenProvider {
         String refreshToken = Jwts.builder()
                 .claim("type", TYPE_REFRESH)
                 .setIssuedAt(now)   //토큰 발행 시간 정보
-                .setExpiration(new Date(now.getTime() + ExpireTime.REFRESH_TOKEN_EXPIRE_TIME)) //토큰 만료 시간 설정
+                .setExpiration(new Date(now.getTime() + validityInMilliseconds)) //토큰 만료 시간 설정
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
-        return UserResponseDto.TokenInfo.builder()
+        return UserResponseDto.builder()
                 .grantType(BEARER_TYPE)
                 .accessToken(accessToken)
-                .accessTokenExpirationTime(ExpireTime.ACCESS_TOKEN_EXPIRE_TIME)
+                .accessTokenExpirationTime(validityInMilliseconds)
                 .refreshToken(refreshToken)
-                .refreshTokenExpirationTime(ExpireTime.REFRESH_TOKEN_EXPIRE_TIME)
+                .refreshTokenExpirationTime(validityInMilliseconds)
                 .build();
     }
 
