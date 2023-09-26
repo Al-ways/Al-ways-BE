@@ -1,4 +1,4 @@
-package com.project.always.domain.surbey;
+package com.project.always.survey.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

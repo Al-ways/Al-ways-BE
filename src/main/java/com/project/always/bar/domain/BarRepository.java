@@ -1,4 +1,4 @@
-package com.project.always.domain.bar;
+package com.project.always.bar.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
