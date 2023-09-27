@@ -84,6 +84,7 @@ dependencies {
 	//Rest Assured
 	testImplementation 'io.rest-assured:rest-assured'
 
+
 	//Rest Docs
 	testImplementation 'org.springframework.restdocs:spring-restdocs-restassured'
 	testImplementation "com.epages:restdocs-api-spec-restassured:${restdocsApiSpecVersion}"
@@ -129,22 +130,22 @@ tasks.named('test') {
 
 //setup asciidoctor
 //asciidoctor {
-//	inputs.dir snippetsDir
-//	dependsOn test
+//   inputs.dir snippetsDir
+//   dependsOn test
 //}
 //
 //// 여러 restdocs가 생기는 것을 방지
 //task createDocument(type: Copy) {
-//	dependsOn asciidoctor
-//	from file("build/asciidoc/html5/index.html")
-//	into file("src/main/resources/static/docs")
+//   dependsOn asciidoctor
+//   from file("build/asciidoc/html5/index.html")
+//   into file("src/main/resources/static/docs")
 //}
 //
 //bootJar {
-//	dependsOn createDocument
-//	from("${asciidoctor.outputDir}/html5") {
-//		into 'static/docs'
-//	}
+//   dependsOn createDocument
+//   from("${asciidoctor.outputDir}/html5") {
+//      into 'static/docs'
+//   }
 //}
 
 //querydsl 추가

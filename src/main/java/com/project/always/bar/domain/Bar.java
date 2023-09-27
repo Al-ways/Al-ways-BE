@@ -1,6 +1,6 @@
-package com.project.always.domain.bar;
+package com.project.always.bar.domain;
 
-import com.project.always.domain.BaseEntity;
+import com.project.always.utils.BaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

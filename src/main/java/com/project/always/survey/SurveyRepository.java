@@ -1,4 +1,4 @@
-package com.project.always.domain.survey;
+package com.project.always.survey;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
