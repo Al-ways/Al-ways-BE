@@ -5,6 +5,9 @@ import static com.project.always.security.oauth.enums.AuthProvider.KAKAO;
 import com.project.always.security.oauth.entity.User;
 import com.project.always.security.oauth.repository.UserRepository;
 import java.util.List;
+
+import member.domain.Member;
+import member.domain.MemberRepository;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.AfterEach;

@@ -1,14 +1,17 @@
 package com.project.always.security.oauth.entity;
 
-import com.project.always.security.oauth.enums.AuthProvider;
+
 import com.project.always.security.oauth.enums.Role;
 import com.project.always.security.oauth.oauth2.OAuth2UserInfo;
 
 import com.project.always.utils.BaseEntity;
-import java.util.UUID;
 import lombok.*;
 
 import javax.persistence.*;
+
+import com.project.always.security.oauth.enums.AuthProvider;
+import java.util.Random;
+import java.util.UUID;
 
 import static com.project.always.security.oauth.enums.Role.ROLE_GUEST;
 
@@ -46,18 +49,16 @@ public class User {
 
         return this;
     }
-
     @Builder
     private User(final String email, final String password, final String name,
                  final AuthProvider authProvider, final String oauth2Id, final Role role) {
         this.email = email;
-        this.password = password ;
+        this.password = String.valueOf(UUID.randomUUID());
         this.name = name;
         this.authProvider = authProvider;
         this.oauth2Id = oauth2Id;
         this.role = ROLE_GUEST; // to do
     }
-
-
-
+  
 }
+

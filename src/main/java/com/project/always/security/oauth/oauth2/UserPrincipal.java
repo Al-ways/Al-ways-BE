@@ -1,18 +1,19 @@
 package com.project.always.security.oauth.oauth2;
 
 import com.project.always.security.oauth.entity.User;
+import com.project.always.security.oauth.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.security.core.userdetails.UserDetails;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 
 @Getter
 @AllArgsConstructor
@@ -32,7 +33,7 @@ public class UserPrincipal implements OAuth2User, UserDetails {
     }
 
     public static UserPrincipal create(User user, Map<String, Object> attributes) {
-        List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")); // enum role todo
+        List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(Role.ROLE_USER.name()));
         UserPrincipal userPrincipal = new UserPrincipal(user.getId(), user.getEmail(), authorities);
         userPrincipal.setAttributes(attributes);
         return userPrincipal;
@@ -82,4 +83,5 @@ public class UserPrincipal implements OAuth2User, UserDetails {
     public String getName() {
         return String.valueOf(id);
     }
+  
 }

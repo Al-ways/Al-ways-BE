@@ -1,4 +1,5 @@
 package com.project.always.security.oauth.jwt;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -31,4 +32,5 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         }
         filterChain.doFilter(servletRequest, servletResponse);
     }
+
 }

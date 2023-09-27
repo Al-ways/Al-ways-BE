@@ -1,21 +1,21 @@
 package com.project.always.security.oauth.oauth2;
 
-import static com.project.always.security.oauth.repository.CookieAuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME;
-
-import com.project.always.security.oauth.repository.CookieAuthorizationRequestRepository;
 import com.project.always.security.oauth.lib.CookieUtils;
+import com.project.always.security.oauth.repository.CookieAuthorizationRequestRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
-
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
+
+
+import static com.project.always.security.oauth.repository.CookieAuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME;
+
 
 @Component
 @RequiredArgsConstructor
@@ -37,4 +37,3 @@ public class OAuth2AuthenticationFailureHandler extends SimpleUrlAuthenticationF
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
     }
 }
-

@@ -1,10 +1,10 @@
 package com.project.always.security.oauth.repository;
 
 import com.project.always.security.oauth.entity.User;
-import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Long> { // type, id
+import java.util.Optional;
 
+public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
 }
