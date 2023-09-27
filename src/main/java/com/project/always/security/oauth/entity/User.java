@@ -18,7 +18,7 @@ import static com.project.always.security.oauth.enums.Role.ROLE_GUEST;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User extends BaseEntity {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
