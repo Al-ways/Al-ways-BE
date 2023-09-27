@@ -85,6 +85,7 @@ dependencies {
 	testImplementation 'io.rest-assured:rest-assured'
 
 
+
 	//Rest Docs
 	testImplementation 'org.springframework.restdocs:spring-restdocs-restassured'
 	testImplementation "com.epages:restdocs-api-spec-restassured:${restdocsApiSpecVersion}"

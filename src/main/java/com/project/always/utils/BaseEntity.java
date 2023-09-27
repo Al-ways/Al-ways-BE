@@ -1,5 +1,6 @@
 package com.project.always.utils;
 
+
 import java.time.LocalDateTime;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;

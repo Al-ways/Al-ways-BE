@@ -1,8 +1,6 @@
 package com.project.always.security.oauth.oauth2;
 
-
 import com.project.always.security.oauth.enums.AuthProvider;
-
 import java.util.Map;
 
 public class OAuth2UserInfoFactory {
@@ -16,4 +14,5 @@ public class OAuth2UserInfoFactory {
             default: throw new IllegalArgumentException("Invalid Provider Type.");
         }
     }
+  
 }

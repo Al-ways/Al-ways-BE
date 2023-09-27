@@ -1,6 +1,6 @@
 package com.project.always.security.oauth.entity;
 
-import com.project.always.security.oauth.enums.AuthProvider;
+
 import com.project.always.security.oauth.enums.Role;
 import com.project.always.security.oauth.oauth2.OAuth2UserInfo;
 
@@ -9,6 +9,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
+import com.project.always.security.oauth.enums.AuthProvider;
 import java.util.Random;
 import java.util.UUID;
 
@@ -58,6 +59,6 @@ public class User {
         this.oauth2Id = oauth2Id;
         this.role = ROLE_GUEST; // to do
     }
-
-
+  
 }
+

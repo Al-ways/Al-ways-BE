@@ -4,6 +4,7 @@ import com.project.always.security.oauth.dto.UserResponseDto;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
+
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Arrays;
@@ -35,13 +37,10 @@ public class JwtTokenProvider {
     private static final String TYPE_REFRESH = "refresh";
 
     private final Key key;
+
     @Value("${jwt.token.validity-in-seconds}")
     private long validityInMilliseconds;
 
-
-    //The specified key byte array is 248 bits which is not secure enough for any JWT HMAC-SHA algorithm.
-    // The JWT JWA Specification (RFC 7518, Section 3.2) states that keys used with HMAC-SHA algorithms MUST have a size >= 256 bits (the key size must be greater than or equal to the hash output size).
-    // Consider using the io.jsonwebtoken.security.Keys#secretKeyFor(SignatureAlgorithm) method to create a key guaranteed to be secure enough for your preferred HMAC-SHA algorithm.
     public JwtTokenProvider(@Value("${jwt.token.secret-key}") String secretKey) {
 
         // 문자열을 바이트 배열로 변환
@@ -60,7 +59,6 @@ public class JwtTokenProvider {
         log.info("generateToken authentication ={}", authentication.getPrincipal());
         return generateToken(authentication.getName(), authentication.getAuthorities());
     }
-
 
     //name, authorities 를 가지고 AccessToken, RefreshToken 을 생성하는 메서드
     public UserResponseDto generateToken(String name, Collection<? extends GrantedAuthority> inputAuthorities) {

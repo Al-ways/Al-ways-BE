@@ -1,6 +1,5 @@
 package com.project.always.security.oauth.oauth2;
 
-
 import com.project.always.security.oauth.entity.User;
 import com.project.always.security.oauth.enums.Role;
 import lombok.AllArgsConstructor;
@@ -84,4 +83,5 @@ public class UserPrincipal implements OAuth2User, UserDetails {
     public String getName() {
         return String.valueOf(id);
     }
+  
 }

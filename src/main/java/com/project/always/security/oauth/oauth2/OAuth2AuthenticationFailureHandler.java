@@ -1,6 +1,5 @@
 package com.project.always.security.oauth.oauth2;
 
-
 import com.project.always.security.oauth.lib.CookieUtils;
 import com.project.always.security.oauth.repository.CookieAuthorizationRequestRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static  com.project.always.security.oauth.repository.CookieAuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME;
+
+import static com.project.always.security.oauth.repository.CookieAuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME;
+
 
 @Component
 @RequiredArgsConstructor

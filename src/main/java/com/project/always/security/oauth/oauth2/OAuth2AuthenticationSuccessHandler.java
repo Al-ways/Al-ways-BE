@@ -1,6 +1,5 @@
 package com.project.always.security.oauth.oauth2;
 
-
 import com.project.always.security.oauth.dto.UserResponseDto;
 import com.project.always.security.oauth.lib.CookieUtils;
 import com.project.always.security.oauth.jwt.JwtTokenProvider;
@@ -12,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
+
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -28,30 +28,37 @@ import static com.project.always.security.oauth.repository.CookieAuthorizationRe
 public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     @Value("${oauth.authorizedRedirectUri}")
-    private String redirectUri;
+    private String oauthRedirectUri;
     private final JwtTokenProvider jwtTokenProvider;
     private final CookieAuthorizationRequestRepository cookieAuthorizationRequestRepository;
 
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+                                        Authentication authentication) throws IOException {
+
         String targetUrl = determineTargetUrl(request, response, authentication);
 
         if (response.isCommitted()) {
             log.debug("Response has already been committed.");
             return;
         }
-        clearAuthenticationAttributes(request, response);
+        clearAuthenticationAttributes(request);
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
     }
 
-    protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+    protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response,
+                                        Authentication authentication) {
+
+        log.info("success handler request ={} ",request);
+        log.info("success handler response ={} ",response);
+
         Optional<String> redirectUri = CookieUtils.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME)
                 .map(Cookie::getValue);
-
         if (redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get())) {
             throw new RuntimeException("redirect URIs are not matched.");
         }
+
         String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
 
         //JWT 생성
@@ -69,7 +76,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
     private boolean isAuthorizedRedirectUri(String uri) {
         URI clientRedirectUri = URI.create(uri);
-        URI authorizedUri = URI.create(redirectUri);
+        URI authorizedUri = URI.create(oauthRedirectUri);
 
         if (authorizedUri.getHost().equalsIgnoreCase(clientRedirectUri.getHost())
                 && authorizedUri.getPort() == clientRedirectUri.getPort()) {
@@ -77,4 +84,5 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         }
         return false;
     }
+
 }
