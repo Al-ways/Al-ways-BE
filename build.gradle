@@ -62,12 +62,17 @@ dependencies {
 	// mysql
 	runtimeOnly 'com.mysql:mysql-connector-j'
 
+	//Rest Assured
+	testImplementation 'io.rest-assured:rest-assured'
+
 	// RestDocs
 	asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 
 	// jwt
-	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
+	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
+	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
 
 	// querydsl
 	implementation 'com.querydsl:querydsl-jpa'
@@ -88,22 +93,22 @@ tasks.named('asciidoctor') {
 
 //setup asciidoctor
 //asciidoctor {
-//	inputs.dir snippetsDir
-//	dependsOn test
+//   inputs.dir snippetsDir
+//   dependsOn test
 //}
 //
 //// 여러 restdocs가 생기는 것을 방지
 //task createDocument(type: Copy) {
-//	dependsOn asciidoctor
-//	from file("build/asciidoc/html5/index.html")
-//	into file("src/main/resources/static/docs")
+//   dependsOn asciidoctor
+//   from file("build/asciidoc/html5/index.html")
+//   into file("src/main/resources/static/docs")
 //}
 //
 //bootJar {
-//	dependsOn createDocument
-//	from("${asciidoctor.outputDir}/html5") {
-//		into 'static/docs'
-//	}
+//   dependsOn createDocument
+//   from("${asciidoctor.outputDir}/html5") {
+//      into 'static/docs'
+//   }
 //}
 
 //querydsl 추가

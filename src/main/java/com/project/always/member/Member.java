@@ -1,8 +1,6 @@
-package com.project.always.domain.member;
+package com.project.always.member;
 
-import com.project.always.domain.BaseEntity;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

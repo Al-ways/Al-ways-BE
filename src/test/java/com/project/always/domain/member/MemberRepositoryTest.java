@@ -1,6 +1,8 @@
 package com.project.always.domain.member;
 
 import java.util.List;
+
+import com.project.always.member.Member;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.AfterEach;

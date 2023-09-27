@@ -1,13 +1,15 @@
-DROP TABLE IF EXISTS member;
+DROP TABLE IF EXISTS user;
 
-create table member
+create table user
 (
-    member_id           bigint      not null auto_increment primary key,
+    user_id           bigint      not null auto_increment primary key,
     email        varchar(50) not null,
-    password     varchar(20) not null,
-    name varchar(20) null
-
+    password     varchar(20) null,
+    name varchar(20) null,
+    auth_provider varchar(100) null,
+    oauth2Id varchar(100) null,
+    role varchar(20) null
 );
 
-insert into member (member_id, email, password, name)
-values (1, "test@naver.com", "test1234", "testId");
+insert into user (user_id, email, password, name, auth_provider, oauth2Id,role)
+values (1, "test@naver.com", "test1234", "testId","KAKAO","oauth2IdTest2","ROLE_GUEST");
