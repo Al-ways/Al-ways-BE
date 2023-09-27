@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:src/main/java/com/project/always/survey/domain/Survey.java
 package com.project.always.survey.domain;
+========
+package com.project.always.survey;
+>>>>>>>> dev:src/main/java/com/project/always/survey/Survey.java
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
