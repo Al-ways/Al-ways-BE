@@ -8,7 +8,6 @@ import com.project.always.security.oauth.oauth2.OAuth2UserInfoFactory;
 import com.project.always.security.oauth.oauth2.UserPrincipal;
 import com.project.always.security.oauth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
@@ -17,7 +16,6 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-@Slf4j
 @RequiredArgsConstructor
 @Service
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
@@ -27,7 +25,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
         OAuth2UserService oAuth2UserService = new DefaultOAuth2UserService();
-        log.info("info = {} ",oAuth2UserRequest );
+
         OAuth2User oAuth2User = oAuth2UserService.loadUser(oAuth2UserRequest);
 
         return processOAuth2User(oAuth2UserRequest, oAuth2User);
@@ -54,6 +52,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         else {
             user = registerUser(authProvider, oAuth2UserInfo);
         }
+
         return UserPrincipal.create(user, oAuth2UserInfo.getAttributes());
     }
 
@@ -63,7 +62,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 .name(oAuth2UserInfo.getName())
                 .oauth2Id(oAuth2UserInfo.getOAuth2Id())
                 .authProvider(authProvider)
-                .role(Role.ROLE_USER)
+                .role(Role.ROLE_GUEST)
                 .build();
 
         return userRepository.save(user);
@@ -72,5 +71,5 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     private User updateUser(User user, OAuth2UserInfo oAuth2UserInfo) {
         return userRepository.save(user.update(oAuth2UserInfo));
     }
-
+    
 }

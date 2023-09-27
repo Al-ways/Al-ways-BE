@@ -1,5 +1,7 @@
 package com.project.always.security.oauth.dto;
 
+
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 

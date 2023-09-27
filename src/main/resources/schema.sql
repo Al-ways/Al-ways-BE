@@ -4,7 +4,7 @@ create table user
 (
     user_id           bigint      not null auto_increment primary key,
     email        varchar(50) not null,
-    password     varchar(20) null,
+    password     varchar(100) null,
     name varchar(20) null,
     auth_provider varchar(100) null,
     oauth2Id varchar(100) null,

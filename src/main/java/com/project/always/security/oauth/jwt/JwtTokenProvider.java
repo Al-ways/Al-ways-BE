@@ -4,9 +4,7 @@ import com.project.always.security.oauth.dto.UserResponseDto;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import io.jsonwebtoken.security.SecurityException;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,11 +17,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
+
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
+
 @Slf4j
 @Component
 public class JwtTokenProvider {
@@ -66,10 +68,6 @@ public class JwtTokenProvider {
                 .collect(Collectors.joining(","));
 
         Date now = new Date();
-
-        log.info("inputAuthorities ={}", inputAuthorities);
-        log.info("inputAuthorities ={}", inputAuthorities.stream().collect(Collectors.toList()));
-        log.info(authorities);
 
         //Generate AccessToken
         String accessToken = Jwts.builder()

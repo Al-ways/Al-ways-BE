@@ -8,8 +8,10 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-    @Component
-    public class CookieAuthorizationRequestRepository implements AuthorizationRequestRepository {
+
+@Component
+public class CookieAuthorizationRequestRepository implements AuthorizationRequestRepository {
+
     public static final String OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME = "oauth2_auth_request";
     public static final String REDIRECT_URI_PARAM_COOKIE_NAME = "redirect_uri";
     private static final int COOKIE_EXPIRE_SECONDS = 180;
@@ -46,4 +48,5 @@ import javax.servlet.http.HttpServletResponse;
         CookieUtils.deleteCookie(request, response, OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME);
         CookieUtils.deleteCookie(request, response, REDIRECT_URI_PARAM_COOKIE_NAME);
     }
+  
 }

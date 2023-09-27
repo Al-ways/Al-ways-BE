@@ -14,9 +14,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
 @Getter
 @AllArgsConstructor
 public class UserPrincipal implements OAuth2User, UserDetails {
+
     private Long id;
     private String email;
     private Collection<? extends GrantedAuthority> authorities;
@@ -56,6 +58,7 @@ public class UserPrincipal implements OAuth2User, UserDetails {
     public boolean isCredentialsNonExpired() {
         return true;
     }
+
     @Override
     public boolean isEnabled() {
         return true;
@@ -80,4 +83,5 @@ public class UserPrincipal implements OAuth2User, UserDetails {
     public String getName() {
         return String.valueOf(id);
     }
+  
 }

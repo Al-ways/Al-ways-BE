@@ -1,17 +1,8 @@
 package com.project.always.security.oauth.oauth2;
 
-import static com.project.always.security.oauth.repository.CookieAuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME;
-
+import com.project.always.security.oauth.dto.UserResponseDto;
 import com.project.always.security.oauth.lib.CookieUtils;
 import com.project.always.security.oauth.jwt.JwtTokenProvider;
-import com.project.always.security.oauth.dto.UserResponseDto;
-import java.io.IOException;
-import java.net.URI;
-import java.util.Optional;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.project.always.security.oauth.repository.CookieAuthorizationRequestRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,8 +12,18 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
-@Component
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URI;
+import java.util.Optional;
+
+import static com.project.always.security.oauth.repository.CookieAuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME;
+
 @Slf4j
+@Component
 @RequiredArgsConstructor
 public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
@@ -35,6 +36,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException {
+
         String targetUrl = determineTargetUrl(request, response, authentication);
 
         if (response.isCommitted()) {
@@ -62,8 +64,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         //JWT 생성
         UserResponseDto tokenInfo = jwtTokenProvider.generateToken(authentication);
 
-        log.info("targetUrl = {}", targetUrl);
-
         return UriComponentsBuilder.fromUriString(targetUrl)
                 .queryParam("token", tokenInfo.getAccessToken())
                 .build().toUriString();
@@ -84,4 +84,5 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         }
         return false;
     }
+
 }

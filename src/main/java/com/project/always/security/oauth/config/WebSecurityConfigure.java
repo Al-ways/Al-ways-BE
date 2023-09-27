@@ -14,10 +14,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 @RequiredArgsConstructor
 @EnableWebSecurity
 @Configuration
 public class WebSecurityConfigure {
+
     private final CustomOAuth2UserService customOAuth2UserService;
     private final JwtTokenProvider jwtTokenProvider;
     private final CookieAuthorizationRequestRepository cookieAuthorizationRequestRepository;
@@ -44,7 +46,7 @@ public class WebSecurityConfigure {
         //oauth2Login
         http.oauth2Login()
                 .authorizationEndpoint().baseUri("/oauth2/authorize")  // 소셜 로그인 url
-                /*.authorizationRequestRepository(cookieAuthorizationRequestRepository)  // 인증 요청을 cookie 에 저장*/
+                .authorizationRequestRepository(cookieAuthorizationRequestRepository)  // 인증 요청을 cookie 에 저장
                 .and()
                 .redirectionEndpoint().baseUri("/oauth2/redirected/*")  // 소셜 인증 후 redirect url
                 .and()

@@ -1,7 +1,14 @@
-//querydsl 추가
+import org.hidetake.gradle.swagger.generator.GenerateSwaggerUI
+import org.springframework.boot.gradle.tasks.bundling.BootJar
+
 buildscript {
+	//querydsl 추가
 	dependencies {
 		classpath("gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:1.0.10")
+	}
+	//restdocsapi add
+	ext {
+		restdocsApiSpecVersion = '0.16.2'
 	}
 }
 
@@ -10,12 +17,15 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.15'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
-	// rest docs
-	id 'org.asciidoctor.jvm.convert' version '3.3.2'
+
+	id 'com.epages.restdocs-api-spec' version "${restdocsApiSpecVersion}"
+
+	// swagger generator 플러그인 추가
+	id 'org.hidetake.swagger.generator' version '2.18.2'
 }
 
-//querydsl
-apply plugin: "com.ewerk.gradle.plugins.querydsl"
+////querydsl
+//apply plugin: "com.ewerk.gradle.plugins.querydsl"
 
 group = 'com.project'
 version = '0.0.1-SNAPSHOT'
@@ -24,22 +34,31 @@ java {
 	sourceCompatibility = '11'
 }
 
+openapi3 {
+	setServer("http://localhost:8080")
+	title = "Al-ways API 문서"
+	description = "Spring REST Docs with SwaggerUI."
+	version = "0.0.1"
+	format = "yaml"
+}
+
+// swaggerSources 설정 추가
+swaggerSources {
+	sample {
+		setInputFile(file("${project.buildDir}/api-spec/openapi3.yaml"))
+	}
+}
+
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
-	// rest docs
-	asciidoctorExt
 }
 
 repositories {
 	mavenCentral()
 }
 
-// rest docs : snippetsDir
-ext {
-	set('snippetsDir', file("build/generated-snippets"))
-}
 
 dependencies {
 	// spring boot
@@ -65,31 +84,50 @@ dependencies {
 	//Rest Assured
 	testImplementation 'io.rest-assured:rest-assured'
 
-	// RestDocs
-	asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
-	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+
+
+	//Rest Docs
+	testImplementation 'org.springframework.restdocs:spring-restdocs-restassured'
+	testImplementation "com.epages:restdocs-api-spec-restassured:${restdocsApiSpecVersion}"
+	testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.16.2'
+
+	// SwaggerUI
+	swaggerUI 'org.webjars:swagger-ui:4.11.1'
 
 	// jwt
 	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
 	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
 	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
 
-	// querydsl
-	implementation 'com.querydsl:querydsl-jpa'
-	implementation 'com.querydsl:querydsl-apt'
+//	// querydsl
+//	implementation 'com.querydsl:querydsl-jpa'
+//	implementation 'com.querydsl:querydsl-apt'
+}
+
+// GenerateSwaggerUI 태스크가, openapi3 task 를 의존하도록 설정
+tasks.withType(GenerateSwaggerUI) {
+	dependsOn 'openapi3'
+}
+
+// 생성된 SwaggerUI 를 jar 에 포함시키기 위해 build/resources 경로로 로 복사
+tasks.register('copySwaggerUI', Copy) {
+	dependsOn 'generateSwaggerUISample'
+
+	def generateSwaggerUISampleTask = tasks.named('generateSwaggerUISample', GenerateSwaggerUI).get()
+
+	from("${generateSwaggerUISampleTask.outputDir}")
+	into("${project.buildDir}/resources/main/static/docs")
+}
+
+// bootJar 실행 전, copySwaggerUI 를 실행하도록 설정
+tasks.withType(BootJar) {
+	dependsOn 'copySwaggerUI'
 }
 
 tasks.named('test') {
-	outputs.dir snippetsDir
 	useJUnitPlatform()
 }
 
-tasks.named('asciidoctor') {
-	inputs.dir snippetsDir
-	dependsOn test
-}
-
-// rest docs 설정 보류 swagger 처리
 
 //setup asciidoctor
 //asciidoctor {
@@ -113,25 +151,25 @@ tasks.named('asciidoctor') {
 
 //querydsl 추가
 //def querydslDir = 'src/main/generated'
-def querydslDir = "$buildDir/generated/querydsl"
-querydsl {
-	library = "com.querydsl:querydsl-apt"
-	jpa = true
-	querydslSourcesDir = querydslDir
-}
-
-sourceSets {
-	main {
-		java {
-			srcDirs = ['src/main/java', querydslDir]
-		}
-	}
-}
-
-compileQuerydsl{
-	options.annotationProcessorPath = configurations.querydsl
-}
-
-configurations {
-	querydsl.extendsFrom compileClasspath
-}
+//def querydslDir = "$buildDir/generated/querydsl"
+//querydsl {
+//	library = "com.querydsl:querydsl-apt"
+//	jpa = true
+//	querydslSourcesDir = querydslDir
+//}
+//
+//sourceSets {
+//	main {
+//		java {
+//			srcDirs = ['src/main/java', querydslDir]
+//		}
+//	}
+//}
+//
+//compileQuerydsl{
+//	options.annotationProcessorPath = configurations.querydsl
+//}
+//
+//configurations {
+//	querydsl.extendsFrom compileClasspath
+//}
