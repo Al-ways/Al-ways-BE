@@ -1,11 +1,7 @@
-<<<<<<<< HEAD:src/main/java/com/project/always/bar/domain/Bar.java
 package com.project.always.bar.domain;
 
 import com.project.always.utils.BaseEntity;
-========
-package com.project.always.bar;
 
->>>>>>>> dev:src/main/java/com/project/always/bar/Bar.java
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

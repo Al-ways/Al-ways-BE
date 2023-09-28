@@ -5,7 +5,7 @@ import com.project.always.security.oauth.oauth2.OAuth2AuthenticationFailureHandl
 import com.project.always.security.oauth.oauth2.OAuth2AuthenticationSuccessHandler;
 import com.project.always.security.oauth.jwt.JwtAuthenticationFilter;
 import com.project.always.security.oauth.jwt.JwtTokenProvider;
-import com.project.always.security.oauth.service.CustomOauth2UserService;
+import com.project.always.security.oauth.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +24,7 @@ public class WebSecurityConfigure {
 
     private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
     private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
-    private final CustomOauth2UserService customOauth2UserService;
+    private final CustomOAuth2UserService customOauth2UserService;
     private final CookieAuthorizationRequestRepository cookieAuthorizationRequestRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
