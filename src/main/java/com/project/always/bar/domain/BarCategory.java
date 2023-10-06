@@ -32,4 +32,6 @@ public class BarCategory {
     child.setParent(this);
     }
     * */
+    @OneToMany(mappedBy = "barcategory")
+    private List<Bar> bars = new ArrayList<>();
 }

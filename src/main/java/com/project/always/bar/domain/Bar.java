@@ -9,6 +9,9 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -18,7 +21,7 @@ public class Bar extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "bar_id")
     private Long id; //술집번호
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private BarCategory barCategory; //카테고리 번호
     private String title; //술집이름
@@ -34,4 +37,6 @@ public class Bar extends BaseEntity {
     private String group;//단체석여부
     private Long hit;//조회수
 
+    @OneToMany(mappedBy = "bar")
+    List<Tag> tags = new ArrayList<>();
 }

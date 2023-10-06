@@ -16,20 +16,17 @@ public class Menu extends BaseEntity {
     @Column(name = "menu_id")
     private Long id; //메뉴번호
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bar_id")
     private Bar bar; //술집번호
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private MenuCategory menuCategory;//카테고리 번호
 
     private String name;//메뉴이름
     private Long price;//가격
 
-    @OneToOne
-    @JoinColumn(name = "file_id")
-    private Image image;//파일 번호
 
 
 

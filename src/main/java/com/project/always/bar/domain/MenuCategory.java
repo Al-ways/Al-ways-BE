@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -19,6 +21,6 @@ public class MenuCategory extends BaseEntity {
     private String name;//카테고리명
     private String grade;//카테고리등급
 
-    @OneToOne(mappedBy = "menu_category")
-    private Menu menu;
+    @OneToMany(mappedBy = "menu_category")
+    List<Menu> menus = new ArrayList<>();
 }
