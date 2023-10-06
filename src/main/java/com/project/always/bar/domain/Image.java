@@ -19,4 +19,6 @@ public class Image extends BaseEntity {
     private String name; //파일이름
     private String org_name; //파일 원본 이름
 
+    @OneToOne(mappedBy = "image")
+    private Menu menu;
 }

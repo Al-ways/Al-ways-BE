@@ -2,11 +2,7 @@ package com.project.always.bar.domain;
 
 import com.project.always.utils.BaseEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import com.project.always.utils.BaseEntity;
 import lombok.AccessLevel;
@@ -22,8 +18,9 @@ public class Bar extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "bar_id")
     private Long id; //술집번호
-
-    private Long category_id; //카테고리 번호 -> mapping필요
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private BarCategory barCategory; //카테고리 번호
     private String title; //술집이름
 
     private String location; //술집위치

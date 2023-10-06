@@ -15,11 +15,21 @@ public class Menu extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "menu_id")
     private Long id; //메뉴번호
-    private Long bar_id; //술집번호
-    private Long category_id;//카테고리 번호
+
+    @ManyToOne
+    @JoinColumn(name = "bar_id")
+    private Bar bar; //술집번호
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private MenuCategory menuCategory;//카테고리 번호
+
     private String name;//메뉴이름
     private Long price;//가격
-    private Long file_id;//파일 번호
+
+    @OneToOne
+    @JoinColumn(name = "file_id")
+    private Image image;//파일 번호
 
 
 

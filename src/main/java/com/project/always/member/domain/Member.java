@@ -1,4 +1,4 @@
-package com.project.always.member;
+package com.project.always.member.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
