@@ -21,15 +21,20 @@ public class Bar extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "bar_id")
-    private Long id;
+    private Long id; //술집번호
 
-    private String title;
+    private Long category_id; //카테고리 번호 -> mapping필요
+    private String title; //술집이름
 
-    private String location;
+    private String location; //술집위치
 
-    private String tel;
+    private String tel; //전화번호
 
-    private String lat;
-    private String log;
+    private String lat; //위도
+    private String log; //경도
+
+    private String open_status; //영업시간
+    private String group;//단체석여부
+    private Long hit;//조회수
 
 }
