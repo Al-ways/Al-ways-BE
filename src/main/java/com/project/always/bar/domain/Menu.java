@@ -19,6 +19,7 @@ public class Menu extends BaseEntity {
     private Long category_id;//카테고리 번호
     private String name;//메뉴이름
     private Long price;//가격
+    private Long file_id;//파일 번호
 
 
 
