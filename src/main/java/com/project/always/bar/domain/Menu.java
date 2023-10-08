@@ -21,8 +21,8 @@ public class Menu extends BaseEntity {
     private Bar bar; //술집번호
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
-    private MenuCategory menuCategory;//카테고리 번호
+    @JoinColumn(name = "menu_category_id")
+    private MenuCategory menuCategory;
 
     private String name;//메뉴이름
     private Long price;//가격

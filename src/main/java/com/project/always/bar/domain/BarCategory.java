@@ -16,17 +16,13 @@ public class BarCategory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
     private Long id; //카테고리번호
-
     private String name;//카테고리이름
-
-
-    @ManyToOne(fetch = FetchType.LAZY)
+/*    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     private BarCategory parent;
 
     @OneToMany(mappedBy = "parent")
-    private List<BarCategory> child = new ArrayList<>();
-
+    private List<BarCategory> child = new ArrayList<>();*/
 
     /*
     * public void addChildCategory(Category child) {
