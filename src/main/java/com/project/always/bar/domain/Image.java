@@ -15,10 +15,10 @@ import java.util.Date;
 public class Image extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "file_id")
-    private Long id; //파일번호
+    @Column(name = "image_id")
+    private Long id; //이미지번호
 
-    private String name; //파일이름
+    private String name; //이미지이름
     private String org_name; //파일 원본 이름
     @OneToOne
     @JoinColumn(name = "menu_id")
