@@ -29,6 +29,4 @@ public class Menu extends BaseEntity {
 
 
 
-
-
 }

@@ -1,5 +1,6 @@
 package com.project.always.bar.domain;
 
+import com.project.always.member.domain.MemberBar;
 import com.project.always.utils.BaseEntity;
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class Bar extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "bar_id")
     private Long id; //술집번호
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private BarCategory barCategory; //카테고리 번호
@@ -38,5 +40,13 @@ public class Bar extends BaseEntity {
     private Long hit;//조회수
 
     @OneToMany(mappedBy = "bar")
-    List<Tag> tags = new ArrayList<>();
+    private List<Tag> tags = new ArrayList<>();
+
+    @OneToMany(mappedBy = "bar")
+    private List<MemberBar> memberBars = new ArrayList<>();
+
+    @OneToMany(mappedBy = "bar")
+    private List<Menu> menus = new ArrayList<>();
+
+
 }
