@@ -14,7 +14,7 @@ import java.util.List;
 public class BarCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "barcategory_id")
+    @Column(name = "category_id")
     private Long id; //카테고리번호
 
     private String name;//카테고리이름

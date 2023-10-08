@@ -79,7 +79,6 @@ dependencies {
 
 	// mysql
 	runtimeOnly 'com.mysql:mysql-connector-j'
-
 	//Rest Assured
 	testImplementation 'io.rest-assured:rest-assured'
 

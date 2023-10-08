@@ -34,7 +34,7 @@ public class Bar extends BaseEntity {
     private String log; //경도
 
     private String open_status; //영업시간
-    private String group;//단체석여부
+    private String group_seat;//단체석여부
     private Long hit;//조회수
 
     @OneToMany(mappedBy = "bar")
@@ -47,7 +47,7 @@ public class Bar extends BaseEntity {
     private List<Menu> menus = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "barcategory_id")
+    @JoinColumn(name = "category_id")
     private BarCategory barCategory; //카테고리 번호
 
 

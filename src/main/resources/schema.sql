@@ -1,5 +1,4 @@
-DROP TABLE IF EXISTS user;
-
+/*DROP TABLE IF EXISTS user;
 create table user
 (
     user_id           bigint      not null auto_increment primary key,
@@ -26,9 +25,11 @@ CREATE TABLE BAR (
     lat	VARCHAR(255)	NULL,
     LOG	VARCHAR(255)	NULL,
     OPEN_STATUS	VARCHAR(255)	NULL,
-    group	bigint	NULL,
-    hit	bigint	NULL
+    group_seat	bigint	NULL,
+    hit	bigint	NULL,
+    FOREIGN KEY(barcategory_id) REFERENCES Barcategory(barcategory_id)
 );
-insert into bar(bar_id,CATEGORY_ID,title,LOCATION,RATING,IMAGE,TEL,lat,log,OPEN_STATUS,group,hit)
+*/
+insert into bar(bar_id,CATEGORY_ID,title,LOCATION,RATING,IMAGE,TEL,lat,log,OPEN_STATUS,group_seat,hit)
 values (1,1,"고부시","서울 강남구 논현동 80-22",5.0,"no image","02-518-2078","37.51613021","127.0302467","매일",5,5);
 
