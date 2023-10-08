@@ -1,22 +1,23 @@
-package com.project.always.member.domain;
+package com.project.always.bar.domain;
 
 import com.project.always.bar.domain.Bar;
-import com.project.always.utils.BaseEntity;
+import com.project.always.security.oauth.entity.User;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.io.Serializable;
 
-@Entity
+
 @Getter
+@Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Review extends BaseEntity {
-
+public class UserBar implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "review_id")
+    @Column(name = "member_bar_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -25,9 +26,11 @@ public class Review extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    private Member member;
+    private User user;
 
-    private int select_rating;
-    private String content;
-    private Date date;
+    @Builder
+    public UserBar(User user, Bar bar){
+        this.user = user;
+        this.bar = bar;
+    }
 }

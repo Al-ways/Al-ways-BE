@@ -1,11 +1,9 @@
 package com.project.always.bar.domain;
 
-import com.project.always.member.domain.MemberBar;
 import com.project.always.utils.BaseEntity;
 
 import javax.persistence.*;
 
-import com.project.always.utils.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,13 +21,13 @@ public class Bar extends BaseEntity {
     @Column(name = "bar_id")
     private Long id; //술집번호
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
-    private BarCategory barCategory; //카테고리 번호
+
     private String title; //술집이름
 
     private String location; //술집위치
 
+    private Double rating;//술집 평점
+    private String image; //대표이미지
     private String tel; //전화번호
 
     private String lat; //위도
@@ -43,10 +41,15 @@ public class Bar extends BaseEntity {
     private List<Tag> tags = new ArrayList<>();
 
     @OneToMany(mappedBy = "bar")
-    private List<MemberBar> memberBars = new ArrayList<>();
+    private List<UserBar> userBars = new ArrayList<>();
 
     @OneToMany(mappedBy = "bar")
     private List<Menu> menus = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "barcategory_id")
+    private BarCategory barCategory; //카테고리 번호
+
 
 
 }
