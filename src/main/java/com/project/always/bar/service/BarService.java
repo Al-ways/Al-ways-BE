@@ -5,6 +5,7 @@ import com.project.always.bar.repository.BarRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,8 +14,8 @@ import java.util.List;
 
 public class BarService {
     private final BarRepository barRepository;
-
-    public List<Bar> findAllBar(){ return barRepository.findAll(); };
+    @Transactional(readOnly = true)
+    public List<Bar> findAll(){ return barRepository.findAll(); };
 
     public Bar findByTitle(String barTitle){ return barRepository.findByTitle(barTitle); };
 

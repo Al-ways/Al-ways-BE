@@ -82,6 +82,7 @@ dependencies {
 	//Rest Assured
 	testImplementation 'io.rest-assured:rest-assured'
 
+	implementation 'org.apache.commons:commons-lang3'
 
 
 	//Rest Docs
@@ -97,6 +98,9 @@ dependencies {
 	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
 	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
 
+	//mapstruct
+	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
 //	// querydsl
 //	implementation 'com.querydsl:querydsl-jpa'
 //	implementation 'com.querydsl:querydsl-apt'

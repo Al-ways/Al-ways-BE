@@ -17,7 +17,7 @@ import java.io.Serializable;
 public class UserBar implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_bar_id")
+    @Column(name = "user_bar_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

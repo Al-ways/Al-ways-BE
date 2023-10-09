@@ -5,6 +5,7 @@ import com.project.always.utils.BaseEntity;
 import javax.persistence.*;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -13,8 +14,8 @@ import java.util.List;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Bar extends BaseEntity {
+@NoArgsConstructor
+public class Bar {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,7 +50,6 @@ public class Bar extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private BarCategory barCategory; //카테고리 번호
-
 
 
 }
