@@ -1,5 +1,6 @@
 drop table if exists review;
 drop table if exists image;
+drop table if exists tag_bar;
 drop table if exists tag;
 drop table if exists survey;
 drop table if exists menu;

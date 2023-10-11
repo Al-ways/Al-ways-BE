@@ -39,9 +39,6 @@ public class Bar {
     private Long hit;//조회수
 
     @OneToMany(mappedBy = "bar")
-    private List<Tag> tags = new ArrayList<>();
-
-    @OneToMany(mappedBy = "bar")
     private List<UserBar> userBars = new ArrayList<>();
 
     @OneToMany(mappedBy = "bar")
