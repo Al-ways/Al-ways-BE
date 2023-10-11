@@ -51,5 +51,8 @@ public class Bar {
     @JoinColumn(name = "category_id")
     private BarCategory barCategory; //카테고리 번호
 
+    @OneToMany(mappedBy = "bar")
+    private List<TagBar> tagBars = new ArrayList<>();
+
 
 }

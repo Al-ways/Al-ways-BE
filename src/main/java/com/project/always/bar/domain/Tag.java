@@ -17,7 +17,5 @@ public class Tag {
     private Long id; //태그번호
     private String name;//태그이름
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bar_id")
-    private Bar bar;
+
 }
