@@ -51,4 +51,10 @@ public class BarController {
     public HttpResponseEntity.ResponseResult<List<BarDTO>> findByLocationContaining(@RequestParam @NotBlank String location){
         return success(barMapper.toDtoList(barService.findByLocationContaining(location)));
     }
+
+
+    @GetMapping("/bycate")
+    public HttpResponseEntity.ResponseResult<List<BarDTO>> getBarsByCategoryName(@RequestParam @NotBlank String category){
+        return success(barMapper.toDtoList(barService.getBarsByCategoryName(category)));
+    }
 }

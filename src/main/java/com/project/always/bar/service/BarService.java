@@ -1,7 +1,9 @@
 package com.project.always.bar.service;
 
 import com.project.always.bar.domain.Bar;
+import com.project.always.bar.domain.BarCategory;
 import com.project.always.bar.error.exception.BarNotFoundException;
+import com.project.always.bar.repository.BarCategoryRepository;
 import com.project.always.bar.repository.BarRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import java.util.Optional;
 
 public class BarService {
     private final BarRepository barRepository;
+    private final BarCategoryRepository barCategoryRepository;
     @Transactional(readOnly = true)
     public List<Bar> findAll(){ return barRepository.findAll(); };
     @Transactional(readOnly = true)
@@ -31,5 +34,12 @@ public class BarService {
 
     public List<Bar> findByLocationContaining(String location) {
         return barRepository.findByLocationContaining(location);
+    }
+    public List<Bar> getBarsByCategoryName(String categoryName){
+        BarCategory category = barCategoryRepository.findByName(categoryName);
+        if(category == null){
+            throw new BarNotFoundException("Cannot find that Category");
+        }
+        return category.getBars();
     }
 }
