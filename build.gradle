@@ -84,7 +84,8 @@ dependencies {
 	//Rest Assured
 	testImplementation 'io.rest-assured:rest-assured'
 
-
+	// mockmvc
+	testImplementation 'io.rest-assured:spring-mock-mvc'
 
 	//Rest Docs
 	testImplementation 'org.springframework.restdocs:spring-restdocs-restassured'
