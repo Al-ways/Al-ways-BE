@@ -10,4 +10,6 @@ public interface BarRepository extends JpaRepository<Bar,Long> {
     Bar findByTitle(String title);
 
     List<Bar> findByTitleContaining(String title);
+
+    List<Bar> findByLocationContaining(String location);
 }

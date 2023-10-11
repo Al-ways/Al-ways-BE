@@ -100,7 +100,7 @@ public class BarControllerApiTest extends BaseControllerTest {
         given(this.spec)
                 .filter(document(DEFAULT_RESTDOC_PATH,RESPONSE_FIELDS)) // API 문서 관련 필터 추가
                 .accept(MediaType.APPLICATION_JSON_VALUE)
-                .header("Content-type", "application/json")
+                .header("Content-type", "application/json; charset=UTF-8")
                 .body(response)
                 .log().all()
 

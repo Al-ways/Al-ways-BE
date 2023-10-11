@@ -29,4 +29,7 @@ public class BarService {
         return barRepository.findByTitleContaining(title);
     }
 
+    public List<Bar> findByLocationContaining(String location) {
+        return barRepository.findByLocationContaining(location);
+    }
 }

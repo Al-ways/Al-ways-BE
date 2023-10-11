@@ -47,4 +47,8 @@ public class BarController {
         return success(barMapper.toDtoList(barService.findByTitleContaining(title)));
     }
 
+    @GetMapping("/bylocation")
+    public HttpResponseEntity.ResponseResult<List<BarDTO>> findByLocationContaining(@RequestParam @NotBlank String location){
+        return success(barMapper.toDtoList(barService.findByLocationContaining(location)));
+    }
 }
