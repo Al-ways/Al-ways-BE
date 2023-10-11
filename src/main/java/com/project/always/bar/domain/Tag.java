@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -17,5 +19,7 @@ public class Tag {
     private Long id; //태그번호
     private String name;//태그이름
 
+    @OneToMany(mappedBy = "tag")
+    private List<TagBar> tagBars = new ArrayList<>();
 
 }
