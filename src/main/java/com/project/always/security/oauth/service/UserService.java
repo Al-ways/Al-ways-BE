@@ -23,6 +23,9 @@ public class UserService {
         userInfo.ifPresent(m -> m.setName(userNameRequestDto.getName()));
     }
 
+    public Optional<String> getProfileImage(Long id) {
+        return userRepository.findById(id).map(User::getProfileImage);
+    }
 
 }
 

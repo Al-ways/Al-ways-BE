@@ -43,6 +43,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Column(length = 512)
+    private String profileImage;
+
     public User update(OAuth2UserInfo oAuth2UserInfo) {
         this.name = oAuth2UserInfo.getName();
         this.oauth2Id = oAuth2UserInfo.getOAuth2Id();
@@ -50,16 +53,17 @@ public class User {
         return this;
     }
     @Builder
-    private User(final String email, final String password, final String name,
-                 final AuthProvider authProvider, final String oauth2Id, final Role role) {
+    private User(final Long id, final String email, final String password, final String name,
+                 final AuthProvider authProvider, final String oauth2Id, final Role role, final String profileImage) {
+        this.id = id;
         this.email = email;
         this.password = String.valueOf(UUID.randomUUID());
         this.name = name;
         this.authProvider = authProvider;
+        this.profileImage = profileImage; // TODO profileImage ? default(test_profile_image) : oAuthUserInfo.getProfileImage()
         this.oauth2Id = oauth2Id;
         this.role = ROLE_GUEST; // to do
     }
-  
     public void setName(String name) {this.name = name;}
 }
 

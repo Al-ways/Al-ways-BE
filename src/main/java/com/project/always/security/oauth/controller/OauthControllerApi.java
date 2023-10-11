@@ -54,6 +54,42 @@ public class OauthControllerApi {
                         .build());
     }
 
+    @GetMapping("/profile")
+    public ResponseEntity<SuccessResponse> getProfileImage(
+            @AuthenticationPrincipal UserPrincipal userPrincipal) {
+
+        String profileImage = userService.getProfileImage(userPrincipal.getUser().getId())
+                .orElseThrow(() -> new RuntimeException("member.notFoundProfileImage.exception"));
+
+        return ResponseEntity.ok(SuccessResponse.builder()
+                .message("get.user.profileImage.success")
+                .data(new ProfileImageDto(profileImage))
+                .build());
+    }
+
+    @PostMapping("/profile")
+    public ResponseEntity<SuccessResponse> postProfileImage(
+            @AuthenticationPrincipal UserPrincipal userPrincipal,
+            @RequestParam("image") MultipartFile imageFile) {
+
+        String imageUrl;
+
+//        try {
+//            imageUrl = s3Service.upload(imageFile, "profile");
+//        } catch (Exception e) {
+//            throw new RequestTimeoutException(
+//                    MessageUtil.getMessage("member.uploadProfileImage.failure"));
+//        }
+//        userService.putProfileImage(userPrincipal.getId(), imageUrl);
+//
+//        return ResponseEntity.status(HttpStatus.CREATED).body(
+//                SuccessResponse.builder()
+//                        .httpStatus(HttpStatus.CREATED)
+//                        .data(new ProfileImageDto(imageUrl))
+//                        .build());
+
+        return null;
+    }
 
 
 //    @GetMapping("/{authProvider}/login")

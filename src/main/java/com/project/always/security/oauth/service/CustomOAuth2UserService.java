@@ -63,6 +63,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 .oauth2Id(oAuth2UserInfo.getOAuth2Id())
                 .authProvider(authProvider)
                 .role(Role.ROLE_GUEST)
+                .profileImage(oAuth2UserInfo.getProfileImage())
                 .build();
 
         return userRepository.save(user);

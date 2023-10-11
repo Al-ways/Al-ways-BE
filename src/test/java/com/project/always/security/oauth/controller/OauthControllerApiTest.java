@@ -116,4 +116,68 @@ class OauthControllerApiTest extends AcceptanceTest {
                 ));
     }
 
+
+    @Test
+    @DisplayName("프로필 이미지 조회 테스트")
+    @WithMockOAuth2User
+    void getProfileImage() throws Exception {
+
+        // given
+        given(userService.getProfileImage(anyLong()))
+                .willReturn(Optional.of("https://image.storage.com/profile/1"));
+
+        // when
+        ResultActions result = mockMvc.perform(get("/api/oauth2/profile")
+                .header(HttpHeaders.AUTHORIZATION, BEARER_TYPE + "ACCESS_TOKEN"));
+
+        // then
+        result.andExpect(status().isOk())
+                .andDo(document(DEFAULT_RESTDOC_PATH,
+                        requestHeaders(
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("액세스 토큰")
+                        ),
+                        responseFields(
+                                fieldWithPath("status").type(JsonFieldType.NUMBER).description("응답 상태 코드"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("응답 메시지"),
+                                fieldWithPath("data.url").type(JsonFieldType.STRING).description("응답 프로필 url")
+                        )
+                ));
+    }
+
+//    @Test
+//    @DisplayName("프로필 이미지 수정 테스트")
+//    @WithMockOAuth2User
+//    void postProfile() throws Exception {
+//
+//        // given
+//        MockMultipartFile image = new MockMultipartFile(
+//                "image", "image.png", "image/png", "image data".getBytes());
+//        given(s3Service.upload(any(MultipartFile.class), eq("profile")))
+//                .willReturn("https://image.storage.com/profile/1");
+//
+//        // when
+//        ResultActions result = mockMvc.perform(multipart("/api/v1/user/profile")
+//                .file(image)
+//                .header(HttpHeaders.AUTHORIZATION, BEARER_TYPE + "ACCESS_TOKEN")
+//                .contentType(MediaType.MULTIPART_FORM_DATA)
+//                .accept(MediaType.APPLICATION_JSON)
+//        );
+//
+//        // then
+//        result.andExpect(status().isCreated())
+//                .andDo(document("member/put-profile",
+//                        requestHeaders(
+//                                headerWithName(HttpHeaders.AUTHORIZATION).description("액세스 토큰")
+//                        ),
+//                        requestParts(
+//                                partWithName("image").description("프로필 이미지")
+//                        ),
+//                        responseFields(
+//                                fieldWithPath("status").description("응답 상태 코드"),
+//                                fieldWithPath("data.url").description("사용자 프로필 이미지 URL")
+//                        )
+//                ));
+//    }
+
+
 }

@@ -4,6 +4,8 @@ import com.project.always.security.oauth.dto.UserResponseDto;
 import com.project.always.security.oauth.lib.CookieUtils;
 import com.project.always.security.oauth.jwt.JwtTokenProvider;
 import com.project.always.security.oauth.repository.CookieAuthorizationRequestRepository;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,6 +39,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException {
 
+        log.info("cookieAuthorizationRequestRepository = {}", cookieAuthorizationRequestRepository);
         String targetUrl = determineTargetUrl(request, response, authentication);
 
         if (response.isCommitted()) {
@@ -50,7 +53,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) {
 
-        log.info("success handler request ={} ",request);
         log.info("success handler response ={} ",response);
 
         Optional<String> redirectUri = CookieUtils.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME)
@@ -64,7 +66,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         //JWT 생성
         UserResponseDto tokenInfo = jwtTokenProvider.generateToken(authentication);
 
-        return UriComponentsBuilder.fromUriString(targetUrl)
+        return UriComponentsBuilder.fromUriString("/api/oauth2/kakao/login")
                 .queryParam("token", tokenInfo.getAccessToken())
                 .build().toUriString();
     }
