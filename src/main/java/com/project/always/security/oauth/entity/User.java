@@ -60,5 +60,6 @@ public class User {
         this.role = ROLE_GUEST; // to do
     }
   
+    public void setName(String name) {this.name = name;}
 }
 
