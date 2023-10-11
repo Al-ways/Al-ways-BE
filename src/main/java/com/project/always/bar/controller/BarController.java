@@ -10,10 +10,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 import static com.project.always.utils.HttpResponseEntity.success;
@@ -36,6 +35,16 @@ public class BarController {
     @GetMapping("/allbar")
     public HttpResponseEntity.ResponseResult<List<BarDTO>> getList(){
         return success(barMapper.toDtoList(barService.findAll()));
+    }
+
+    @GetMapping("/{id}")
+    public HttpResponseEntity.ResponseResult<BarDTO> getBar(@PathVariable Long id){
+        return success(barMapper.toDto(barService.findById(id)));
+    }
+
+    @GetMapping("/bytitle")
+    public HttpResponseEntity.ResponseResult<List<BarDTO>> findByTitleContaining(@RequestParam @NotBlank String title){
+        return success(barMapper.toDtoList(barService.findByTitleContaining(title)));
     }
 
 }

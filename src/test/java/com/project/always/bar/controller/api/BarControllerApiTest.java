@@ -46,6 +46,9 @@ public class BarControllerApiTest extends BaseControllerTest {
     MockMvc mockMvc;
     @Autowired
     BarService barService;
+    private static final Snippet REQUEST_FIELDS = requestFields(
+            fieldWithPath("title").type(JsonFieldType.STRING).description("술집이름")
+    );
     private static final Snippet RESPONSE_FIELDS = responseFields(
             fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공 여부"),
             fieldWithPath("response").type(JsonFieldType.ARRAY).description("응답 데이터 목록"),
@@ -86,5 +89,30 @@ public class BarControllerApiTest extends BaseControllerTest {
                 .body("response[0].id", is(1))  // 술집 번호 1인지 확인
                 .body("response[1].id", is(2)); // 술집 번호 2인지 확인;
     }
+    @DisplayName("get bar list by title")
+    @Test
+    void barTitleList_test() throws Exception{
+        String title = "g";
+        net.minidev.json.JSONObject requestBody = new JSONObject();
+        requestBody.put("title", title);
+        List<BarDTO> response = barMapper.toDtoList(barService.findByTitleContaining(title));
 
+        given(this.spec)
+                .filter(document(DEFAULT_RESTDOC_PATH,RESPONSE_FIELDS)) // API 문서 관련 필터 추가
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .header("Content-type", "application/json")
+                .body(response)
+                .log().all()
+
+                .when()
+                .get("/bar/bytitle?title=g")
+
+
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .body("response[0].id", is(1))  // 술집 번호 1인지 확인
+                .body("response[1].id", is(2)); // 술집 번호 2인지 확인;
+
+
+    }
 }
