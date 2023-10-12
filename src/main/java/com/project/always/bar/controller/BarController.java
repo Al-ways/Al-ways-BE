@@ -57,4 +57,10 @@ public class BarController {
     public HttpResponseEntity.ResponseResult<List<BarDTO>> getBarsByCategoryName(@RequestParam @NotBlank String category){
         return success(barMapper.toDtoList(barService.getBarsByCategoryName(category)));
     }
+
+    @GetMapping("/bytag")
+    public HttpResponseEntity.ResponseResult<List<BarDTO>> getBarsByTagName(@RequestParam @NotBlank String tagName){
+        return success(barMapper.toDtoList(barService.getBarsByTagName(tagName)));
+    }
+
 }

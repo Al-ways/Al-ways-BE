@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class TagBar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "tagbar_id")
+    @Column(name = "tag_bar_id")
     private Long id; //태그바번호
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -23,6 +23,4 @@ public class TagBar {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tag_id")
     private Tag tag;
-
-
 }

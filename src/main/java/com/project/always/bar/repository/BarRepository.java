@@ -1,6 +1,7 @@
 package com.project.always.bar.repository;
 
 import com.project.always.bar.domain.Bar;
+import com.project.always.bar.domain.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -12,5 +13,6 @@ public interface BarRepository extends JpaRepository<Bar,Long> {
     List<Bar> findByTitleContaining(String title);
 
     List<Bar> findByLocationContaining(String location);
+
 
 }

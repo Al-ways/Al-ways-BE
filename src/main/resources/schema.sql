@@ -25,26 +25,26 @@ insert into user (user_id, email, password, name, auth_provider, oauth2Id,role)
 values (1, "test@naver.com", "test1234", "testId","KAKAO","oauth2IdTest2","ROLE_GUEST");
 
 CREATE TABLE BAR_CATEGORY (
-CATEGORY_ID	bigint(20)	NOT NULL primary key,
-NAME	VARCHAR(255)	NULL
+                              CATEGORY_ID	bigint(20)	NOT NULL primary key,
+                              NAME	VARCHAR(255)	NULL
 );
 insert into BAR_CATEGORY(category_id, name) values (1,"일본식주점");
 insert into BAR_CATEGORY(category_id, name) values (2,"실내포장마차");
 
 CREATE TABLE BAR (
-    BAR_ID	bigint(20)	NOT NULL auto_increment primary key,
-    CATEGORY_ID	bigint(20)	NOT NULL,
-    TITLE	VARCHAR(255)	NULL,
-    LOCATION	VARCHAR(255)	NULL,
-    RATING	DOUBLE	NULL,
-    IMAGE	VARCHAR(600)	NULL,
-    TEL	VARCHAR(255)	NULL,
-    lat	VARCHAR(255)	NULL,
-    LOG	VARCHAR(255)	NULL,
-    OPEN_STATUS	VARCHAR(255)	NULL,
-    group_seat	bigint	NULL,
-    hit	bigint	NULL,
-    FOREIGN KEY(category_id) REFERENCES Bar_category(category_id)
+                     BAR_ID	bigint(20)	NOT NULL auto_increment primary key,
+                     CATEGORY_ID	bigint(20)	NOT NULL,
+                     TITLE	VARCHAR(255)	NULL,
+                     LOCATION	VARCHAR(255)	NULL,
+                     RATING	DOUBLE	NULL,
+                     IMAGE	VARCHAR(600)	NULL,
+                     TEL	VARCHAR(255)	NULL,
+                     lat	VARCHAR(255)	NULL,
+                     LOG	VARCHAR(255)	NULL,
+                     OPEN_STATUS	VARCHAR(255)	NULL,
+                     group_seat	bigint	NULL,
+                     hit	bigint	NULL,
+                     FOREIGN KEY(category_id) REFERENCES Bar_category(category_id)
 );
 
 insert into bar(bar_id,CATEGORY_ID,title,LOCATION,RATING,IMAGE,TEL,lat,log,OPEN_STATUS,group_seat,hit)
@@ -53,9 +53,9 @@ insert into bar(bar_id,CATEGORY_ID,title,LOCATION,RATING,IMAGE,TEL,lat,log,OPEN_
 values (2,2,"ggom","서울 광진구 화양동 9-50 1층",5.0,"https://ldb-phinf.pstatic.net/20180531_279/1527725073965wpnIX_JPEG/TAroOfA874YOsnnul2gWw0Az.jpg","010-5137-1675","37.54269611","127.069116","매일",5,5);
 
 CREATE TABLE MENU_CATEGORY (
-    menu_category_id   bigint(20)   NOT NULL auto_increment primary key,
-    NAME   VARCHAR(255)   NULL,
-    GRADE   VARCHAR(255)   NULL
+                               menu_category_id   bigint(20)   NOT NULL auto_increment primary key,
+                               NAME   VARCHAR(255)   NULL,
+                               GRADE   VARCHAR(255)   NULL
 );
 
 insert into MENU_CATEGORY(menu_category_id, NAME, GRADE) values (1,"주류",1);
@@ -77,12 +77,28 @@ INSERT INTO menu (menu_id, bar_id,menu_category_id, name, price) VALUES (3,1,2,"
 INSERT INTO menu (menu_id, bar_id,menu_category_id, name, price) VALUES (4,1,2,"나베", 34000);
 
 CREATE TABLE USER_BAR (
-`USER_BAR_ID`	bigint(20)	NOT NULL auto_increment primary key,
-`BAR_ID`	bigint(20)	NOT NULL,
-`MEMBER_ID`	bigint(20)	NOT NULL
+                          `USER_BAR_ID`	bigint(20)	NOT NULL auto_increment primary key,
+                          `BAR_ID`	bigint(20)	NOT NULL,
+                          `MEMBER_ID`	bigint(20)	NOT NULL
 );
 insert into USER_BAR(USER_BAR_ID, bar_id, member_id) VALUES (1,1,1);
 
+CREATE TABLE `TAG` (
+                       `TAG_ID`   bigint(20)   NOT NULL auto_increment primary key,
+                       `NAME`   varchar(255)   NULL
+);
 
 
+CREATE TABLE `TAG_BAR` (
+                           `TAG_BAR_ID`   bigint(20)   NOT NULL auto_increment primary key,
+                           `BAR_ID`   bigint(20)   NOT NULL,
+                           `TAG_ID`   bigint(20)   NOT NULL,
+                           FOREIGN KEY(bar_id) REFERENCES bar(bar_id),
+                           FOREIGN KEY(tag_id) REFERENCES tag(tag_id)
+);
 
+insert into TAG(tag_id, name) values (1,'조용한');
+insert into TAG(tag_id, name) values (2,'시끌벅적한');
+
+insert into TAG_BAR(TAG_BAR_ID,BAR_ID,TAG_ID) values (1,1,1);
+insert into TAG_BAR(TAG_BAR_ID,BAR_ID,TAG_ID) values (2,2,2);
