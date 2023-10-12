@@ -79,10 +79,26 @@ INSERT INTO menu (menu_id, bar_id,menu_category_id, name, price) VALUES (4,1,2,"
 CREATE TABLE USER_BAR (
 `USER_BAR_ID`	bigint(20)	NOT NULL auto_increment primary key,
 `BAR_ID`	bigint(20)	NOT NULL,
-`MEMBER_ID`	bigint(20)	NOT NULL
+`USER_ID`	bigint(20)	NOT NULL
 );
 insert into USER_BAR(USER_BAR_ID, bar_id, member_id) VALUES (1,1,1);
 
+CREATE TABLE `TAG` (
+   `TAG_ID`   bigint(20)   NOT NULL auto_increment primary key,
+   `NAME`   varchar(255)   NULL
+);
 
 
+CREATE TABLE `TAG_BAR` (
+   `TAG_BAR_ID`   bigint(20)   NOT NULL auto_increment primary key,
+   `BAR_ID`   bigint(20)   NOT NULL,
+   `TAG_ID`   bigint(20)   NOT NULL,
+    FOREIGN KEY(bar_id) REFERENCES bar(bar_id),
+    FOREIGN KEY(tag_id) REFERENCES tag(tag_id)
+);
 
+insert into TAG(tag_id, name) values (1,'조용한');
+insert into TAG(tag_id, name) values (2,'시끌벅적한');
+
+insert into TAG_BAR(TAG_BAR_ID,BAR_ID,TAG_ID) values (1,1,1);
+insert into TAG_BAR(TAG_BAR_ID,BAR_ID,TAG_ID) values (2,2,2);

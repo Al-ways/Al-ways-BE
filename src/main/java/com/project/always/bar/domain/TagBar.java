@@ -24,5 +24,4 @@ public class TagBar {
     @JoinColumn(name = "tag_id")
     private Tag tag;
 
-
 }
