@@ -80,9 +80,11 @@ INSERT INTO menu (menu_id, bar_id,menu_category_id, name, price) VALUES (4,1,2,"
 CREATE TABLE USER_BAR (
 `USER_BAR_ID`	bigint(20)	NOT NULL auto_increment primary key,
 `BAR_ID`	bigint(20)	NOT NULL,
-`USER_ID`	bigint(20)	NOT NULL
+`USER_ID`	bigint(20)	NOT NULL,
+FOREIGN KEY(bar_id) REFERENCES bar(bar_id),
+FOREIGN KEY(user_id) REFERENCES user(user_id)
 );
-insert into USER_BAR(USER_BAR_ID, bar_id, member_id) VALUES (1,1,1);
+insert into USER_BAR(USER_BAR_ID, bar_id, user_id) VALUES (1,1,1);
 
 CREATE TABLE `TAG` (
    `TAG_ID`   bigint(20)   NOT NULL auto_increment primary key,
