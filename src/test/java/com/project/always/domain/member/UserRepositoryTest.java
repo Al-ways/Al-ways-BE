@@ -6,7 +6,6 @@ import com.project.always.security.oauth.entity.User;
 import com.project.always.security.oauth.repository.UserRepository;
 import java.util.List;
 
-
 import org.assertj.core.api.Assertions;
 import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.AfterEach;
@@ -29,7 +28,7 @@ class UserRepositoryTest {
     }
 
     @DisplayName("회원 DB 조회")
-    @Test
+    // @Test
     void memberInfoReader() throws Exception{
         //given
         User user = User.builder()

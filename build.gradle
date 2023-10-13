@@ -82,8 +82,11 @@ dependencies {
 	//Rest Assured
 	testImplementation 'io.rest-assured:rest-assured'
 
-	implementation 'org.apache.commons:commons-lang3'
+	// mockmvc
+	testImplementation 'io.rest-assured:spring-mock-mvc'
 
+  // apache
+	implementation 'org.apache.commons:commons-lang3'
 
 	//Rest Docs
 	testImplementation 'org.springframework.restdocs:spring-restdocs-restassured'
