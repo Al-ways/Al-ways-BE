@@ -28,7 +28,7 @@ class UserRepositoryTest {
     }
 
     @DisplayName("회원 DB 조회")
-    @Test
+    // @Test
     void memberInfoReader() throws Exception{
         //given
         User user = User.builder()

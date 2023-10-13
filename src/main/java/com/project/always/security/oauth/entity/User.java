@@ -1,20 +1,20 @@
 package com.project.always.security.oauth.entity;
 
-
+import com.project.always.bar.domain.UserBar;
 import com.project.always.security.oauth.enums.Role;
 import com.project.always.security.oauth.oauth2.OAuth2UserInfo;
 
-import com.project.always.utils.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
 
 import com.project.always.security.oauth.enums.AuthProvider;
-import java.util.Random;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static com.project.always.security.oauth.enums.Role.ROLE_GUEST;
-
 
 @Entity
 @Getter
@@ -45,6 +45,9 @@ public class User {
 
     @Column(length = 512)
     private String profileImage;
+    @OneToMany(mappedBy = "user")
+    private List<UserBar> userBars = new ArrayList<>();
+
 
     public User update(OAuth2UserInfo oAuth2UserInfo) {
         this.name = oAuth2UserInfo.getName();
@@ -64,6 +67,7 @@ public class User {
         this.oauth2Id = oauth2Id;
         this.role = ROLE_GUEST; // to do
     }
+  
     public void setName(String name) {this.name = name;}
-}
 
+}
