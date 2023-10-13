@@ -2,6 +2,7 @@ package com.project.always.controller.api;
 
 import com.project.always.controller.api.request.SampleRequest;
 import com.project.always.controller.api.response.SampleResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Slf4j
 public class SampleControllerApi {
 
     @PostMapping("/api/users")
