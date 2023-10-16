@@ -105,8 +105,7 @@ public class BarControllerApiTest extends BaseControllerTest {
                 .then()
                 .statusCode(HttpStatus.OK.value()); // 술집 번호 2인지 확인;
     }
-<<<<<<< Updated upstream
-=======
+
 
     @DisplayName("get bar list by Location")
     @Test
@@ -157,5 +156,4 @@ public class BarControllerApiTest extends BaseControllerTest {
                 .statusCode(HttpStatus.OK.value()); // 술집 번호 2인지 확인;
     }
 
->>>>>>> Stashed changes
 }
