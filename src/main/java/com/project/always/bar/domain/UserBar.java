@@ -25,7 +25,7 @@ public class UserBar implements Serializable {
     private Bar bar;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Builder
