@@ -63,5 +63,20 @@ public class BarController {
         return success(barMapper.toDtoList(barService.getBarsByTagName(tagName)));
     }
 
+    //view count 증가
+    @PostMapping("/increase-view-count")
+    public ResponseEntity<Bar> increaseViewCount(@RequestParam Long barId) {
+        Bar bar = barService.increaseViewCount(barId);
+        if (bar != null) {
+            return ResponseEntity.ok(bar);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     //구별 술집 인기 리스트 구현
+    @GetMapping("/popularity")
+    public HttpResponseEntity.ResponseResult<List<BarDTO>> getTop3BarsByLocationSortedByHit(@RequestParam @NotBlank String location){
+        return success(barMapper.toDtoList(barService.getTop3BarsByLocationSortedByHit(location)));
+    }
 }
