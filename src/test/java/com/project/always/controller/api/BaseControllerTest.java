@@ -36,8 +36,6 @@ public abstract class BaseControllerTest {
     @LocalServerPort
     int port;
 
-    private MockMvc mockMvc;
-
     @BeforeEach
     void setUp() {
         RestAssured.port = port;

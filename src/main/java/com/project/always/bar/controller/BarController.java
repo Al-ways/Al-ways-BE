@@ -63,4 +63,5 @@ public class BarController {
         return success(barMapper.toDtoList(barService.getBarsByTagName(tagName)));
     }
 
+    //구별 술집 인기 리스트 구현
 }
