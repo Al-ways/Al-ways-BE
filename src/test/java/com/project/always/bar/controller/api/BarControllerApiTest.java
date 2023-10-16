@@ -99,7 +99,7 @@ public class BarControllerApiTest extends BaseControllerTest {
                 .log().all()
 
                 .when()
-                .get("/bar/bytitle?title=g")
+                .get("/bar/bytitle?title=꼼주")
 
 
                 .then()
@@ -155,5 +155,20 @@ public class BarControllerApiTest extends BaseControllerTest {
                 .then()
                 .statusCode(HttpStatus.OK.value()); // 술집 번호 2인지 확인;
     }
+    @DisplayName("get top 3 bar list by location")
+    @Test
+    void barTop3ByLocationList_test() throws Exception{
+        given(this.spec)
+                .filter(document(DEFAULT_RESTDOC_PATH,RESPONSE_FIELDS)) // API 문서 관련 필터 추가
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .header("Content-type", "application/json")
+                //.body(response)
+                .log().all()
 
+                .when()
+                .get("/bar/popularity?location=노원구")
+
+                .then()
+                .statusCode(HttpStatus.OK.value()); // 술집 번호 2인지 확인;
+    }
 }

@@ -62,15 +62,15 @@ values (4,1,"키라키라윤 월계점","서울 노원구 월계동 942 신도�
 insert into BAR(bar_id,CATEGORY_ID,title,LOCATION,RATING,IMAGE,TEL,lat,log,OPEN_STATUS,group_seat,hit)
 values (5,5,"달별아래","서울 노원구 중계동 154-33 1층 달별아래",5.0,"https://ldb-phinf.pstatic.net/20180531_279/1527725073965wpnIX_JPEG/TAroOfA874YOsnnul2gWw0Az.jpg","0507-1369-3167","37.65972195","127.0739148","매일",5,10);
 insert into BAR(bar_id,CATEGORY_ID,title,LOCATION,RATING,IMAGE,TEL,lat,log,OPEN_STATUS,group_seat,hit)
-values (6,1,"오사카로","서울 구로구 신도림동 338 대우푸르지오 206호",5.0,"https://ldb-phinf.pstatic.net/20180531_279/1527725073965wpnIX_JPEG/TAroOfA874YOsnnul2gWw0Az.jpg","02-518-2078","37.51613021","127.0302467","매일",5,5);
+values (6,1,"오사카로","서울 구로구 신도림동 338 대우푸르지오 206호",5.0,"https://ldb-phinf.pstatic.net/20180531_279/1527725073965wpnIX_JPEG/TAroOfA874YOsnnul2gWw0Az.jpg","02-2634-2223","37.51057904","126.8894732","매일",5,5);
 insert into BAR(bar_id,CATEGORY_ID,title,LOCATION,RATING,IMAGE,TEL,lat,log,OPEN_STATUS,group_seat,hit)
-values (7,2,"낙성대우동","서울 관악구 봉천동 1629-2",5.0,"https://ldb-phinf.pstatic.net/20180531_279/1527725073965wpnIX_JPEG/TAroOfA874YOsnnul2gWw0Az.jpg","02-518-2078","37.51613021","127.0302467","매일",5,5);
+values (7,2,"낙성대우동","서울 관악구 봉천동 1629-2",4.5,"https://ldb-phinf.pstatic.net/20180531_279/1527725073965wpnIX_JPEG/TAroOfA874YOsnnul2gWw0Az.jpg","02-878-3345","37.47707805","126.961091","매일",5,5);
 insert into BAR(bar_id,CATEGORY_ID,title,LOCATION,RATING,IMAGE,TEL,lat,log,OPEN_STATUS,group_seat,hit)
-values (8,3,"술희야","서울 강북구 수유동 174-35",5.0,"https://ldb-phinf.pstatic.net/20180531_279/1527725073965wpnIX_JPEG/TAroOfA874YOsnnul2gWw0Az.jpg","02-518-2078","37.51613021","127.0302467","매일",5,5);
+values (8,3,"술희야","서울 강북구 수유동 174-35",5.0,"https://ldb-phinf.pstatic.net/20180531_279/1527725073965wpnIX_JPEG/TAroOfA874YOsnnul2gWw0Az.jpg","010-5811-3348","37.64068431","127.0274963","매일",5,5);
 insert into BAR(bar_id,CATEGORY_ID,title,LOCATION,RATING,IMAGE,TEL,lat,log,OPEN_STATUS,group_seat,hit)
-values (9,5,"몽희","서울 강북구 우이동 61-56 1층",5.0,"https://ldb-phinf.pstatic.net/20180531_279/1527725073965wpnIX_JPEG/TAroOfA874YOsnnul2gWw0Az.jpg","02-518-2078","37.51613021","127.0302467","매일",5,5);
+values (9,5,"몽희","서울 강북구 우이동 61-56 1층",5.0,"https://ldb-phinf.pstatic.net/20180531_279/1527725073965wpnIX_JPEG/TAroOfA874YOsnnul2gWw0Az.jpg","010-6223-0414","37.65630903","127.0122664","매일",5,5);
 insert into BAR(bar_id,CATEGORY_ID,title,LOCATION,RATING,IMAGE,TEL,lat,log,OPEN_STATUS,group_seat,hit)
-values (10,4,"단청","서울 관악구 봉천동 972-31 1층 101호",5.0,"https://ldb-phinf.pstatic.net/20180531_279/1527725073965wpnIX_JPEG/TAroOfA874YOsnnul2gWw0Az.jpg","02-518-2078","37.51613021","127.0302467","매일",5,5);
+values (10,4,"단청","서울 관악구 봉천동 972-31 1층 101호",5.0,"https://ldb-phinf.pstatic.net/20180531_279/1527725073965wpnIX_JPEG/TAroOfA874YOsnnul2gWw0Az.jpg","070-4060-4061","37.49028899","126.9260004","매일",5,5);
 
 
 CREATE TABLE MENU_CATEGORY (

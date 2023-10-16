@@ -79,4 +79,9 @@ public class BarController {
     public HttpResponseEntity.ResponseResult<List<BarDTO>> getTop3BarsByLocationSortedByHit(@RequestParam @NotBlank String location){
         return success(barMapper.toDtoList(barService.getTop3BarsByLocationSortedByHit(location)));
     }
+    @GetMapping("/byrating")
+    public HttpResponseEntity.ResponseResult<List<BarDTO>> getBarsByLocationSortedByRating(@RequestParam @NotBlank String location){
+        return success(barMapper.toDtoList(barService.getBarsByLocationSortedByRating(location)));
+    }
+
 }

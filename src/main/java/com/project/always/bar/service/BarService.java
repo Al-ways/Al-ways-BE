@@ -79,4 +79,8 @@ public class BarService {
     public List<Bar> getTop3BarsByLocationSortedByHit(String location) {
         return barRepository.findTop3ByLocationContainingOrderByHitDesc(location);
     }
+
+    public List<Bar> getBarsByLocationSortedByRating(String location) {
+        return barRepository.findByLocationContainingOrderByRatingDesc(location);
+    }
 }

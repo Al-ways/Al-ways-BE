@@ -18,4 +18,6 @@ public interface BarRepository extends JpaRepository<Bar,Long> {
 
     //@Query(value= "select * from bar where location like %:loc% order by hit desc limit 3", nativeQuery = true)
     List<Bar> findTop3ByLocationContainingOrderByHitDesc(String location);
+
+    List<Bar> findByLocationContainingOrderByRatingDesc(String location);
 }
