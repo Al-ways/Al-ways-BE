@@ -30,4 +30,13 @@ public class Review extends BaseEntity {
     private int select_rating;
     private String content;
     private Date date;
+    public void updateBar(Bar bar) {
+        this.bar = bar;
+    }
+
+    public void updateUser(User user) {
+        this.user = user;
+    }
+
+
 }

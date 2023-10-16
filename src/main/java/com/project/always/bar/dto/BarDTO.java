@@ -56,4 +56,7 @@ public class BarDTO {
         this.group_seat = group_seat;
         this.hit = hit;
     }
+
+    public static class ReviewResponseDTO {
+    }
 }
