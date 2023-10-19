@@ -105,4 +105,53 @@ public class BarControllerApiTest extends BaseControllerTest {
                 .then()
                 .statusCode(HttpStatus.OK.value()); // 술집 번호 2인지 확인;
     }
+
+    @DisplayName("get bar list by Location")
+    @Test
+    void barLocationList_test() throws Exception{
+        given(this.spec)
+                .filter(document(DEFAULT_RESTDOC_PATH,RESPONSE_FIELDS)) // API 문서 관련 필터 추가
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .header("Content-type", "application/json")
+                //.body(response)
+                .log().all()
+
+                .when()
+                .get("/bar/bylocation?location=서울")
+
+                .then()
+                .statusCode(HttpStatus.OK.value()); // 술집 번호 2인지 확인;
+    }
+    @DisplayName("get bar list by tag")
+    @Test
+    void barTagList_test() throws Exception{
+        given(this.spec)
+                .filter(document(DEFAULT_RESTDOC_PATH,RESPONSE_FIELDS)) // API 문서 관련 필터 추가
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .header("Content-type", "application/json")
+                //.body(response)
+                .log().all()
+
+                .when()
+                .get("/bar/bytag?tagName=시끌벅적한")
+
+                .then()
+                .statusCode(HttpStatus.OK.value()); // 술집 번호 2인지 확인;
+    }
+    @DisplayName("get bar list by category")
+    @Test
+    void barCategoryList_test() throws Exception{
+        given(this.spec)
+                .filter(document(DEFAULT_RESTDOC_PATH,RESPONSE_FIELDS)) // API 문서 관련 필터 추가
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .header("Content-type", "application/json")
+                //.body(response)
+                .log().all()
+
+                .when()
+                .get("/bar/bycate?category=일본식주점")
+
+                .then()
+                .statusCode(HttpStatus.OK.value()); // 술집 번호 2인지 확인;
+    }
 }
