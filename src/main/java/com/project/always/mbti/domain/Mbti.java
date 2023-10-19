@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -19,9 +20,13 @@ public class Mbti {
     @Column(name = "mbti_id")
     private Long id;
 
-    @Column(name = "mbti_name")
     private String name;
 
-    @Column(name = "mbti_pattern")
     private String pattern;
+
+    @Builder
+    private Mbti(final String name, final String pattern) {
+        this.name = name;
+        this.pattern = pattern;
+    }
 }

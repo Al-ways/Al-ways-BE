@@ -1,6 +1,6 @@
 package com.project.always.security.oauth.jwt;
 
-import com.project.always.security.oauth.dto.UserResponseDto;
+import com.project.always.security.oauth.dto.response.UserResponseDto;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
