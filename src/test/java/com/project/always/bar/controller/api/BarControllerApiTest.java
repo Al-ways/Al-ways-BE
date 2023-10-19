@@ -172,7 +172,7 @@ public class BarControllerApiTest extends BaseControllerTest {
                 .statusCode(HttpStatus.OK.value()); // 술집 번호 2인지 확인;
     }
 
-    @DisplayName("get top 3 bar list by location")
+    @DisplayName("get bar list order by rating by location")
     @Test
     void barRatingByLocationList_test() throws Exception{
         given(this.spec)
