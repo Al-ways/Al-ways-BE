@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-10-11T23:30:44+0900",
-    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.20 (Oracle Corporation)"
+    date = "2023-10-19T05:02:53+0900",
+    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.15.1 (Oracle Corporation)"
 )
 @Component
 public class BarMapperImpl implements BarMapper {
