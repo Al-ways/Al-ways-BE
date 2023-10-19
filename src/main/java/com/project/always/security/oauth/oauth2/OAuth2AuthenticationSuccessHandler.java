@@ -1,11 +1,9 @@
 package com.project.always.security.oauth.oauth2;
 
-import com.project.always.security.oauth.dto.UserResponseDto;
+import com.project.always.security.oauth.dto.response.UserResponseDto;
 import com.project.always.security.oauth.lib.CookieUtils;
 import com.project.always.security.oauth.jwt.JwtTokenProvider;
 import com.project.always.security.oauth.repository.CookieAuthorizationRequestRepository;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
