@@ -1,7 +1,6 @@
 package com.project.always.security.oauth.service;
 
-import com.project.always.security.oauth.dto.UserNameRequestDto;
-import com.project.always.security.oauth.dto.UserNameResponseDto;
+import com.project.always.security.oauth.dto.request.UserNameRequestDto;
 import com.project.always.security.oauth.entity.User;
 import com.project.always.security.oauth.repository.UserRepository;
 import java.util.Optional;
