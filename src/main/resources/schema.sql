@@ -34,6 +34,9 @@ CREATE TABLE bar_category (
 );
 insert into bar_category(category_id, name) values (1,"일본식주점");
 insert into bar_category(category_id, name) values (2,"실내포장마차");
+insert into bar_category(category_id, name) values (3,"호프요리주점");
+insert into bar_category(category_id, name) values (4,"칵테일바");
+insert into bar_category(category_id, name) values (5,"와인바");
 
 CREATE TABLE bar (
                      BAR_ID   bigint(20)   NOT NULL auto_increment primary key,
@@ -52,9 +55,9 @@ CREATE TABLE bar (
 );
 
 insert into bar(bar_id,CATEGORY_ID,title,LOCATION,RATING,IMAGE,TEL,lat,log,OPEN_STATUS,group_seat,hit)
-values (1,1,"gubu","서울 강남구 논현동 80-22",5.0,"https://ldb-phinf.pstatic.net/20180531_279/1527725073965wpnIX_JPEG/TAroOfA874YOsnnul2gWw0Az.jpg","02-518-2078","37.51613021","127.0302467","매일",5,5);
+values (1,1,"고부시","서울 강남구 논현동 80-22",5.0,"https://ldb-phinf.pstatic.net/20180531_279/1527725073965wpnIX_JPEG/TAroOfA874YOsnnul2gWw0Az.jpg","02-518-2078","37.51613021","127.0302467","매일",5,5);
 insert into bar(bar_id,CATEGORY_ID,title,LOCATION,RATING,IMAGE,TEL,lat,log,OPEN_STATUS,group_seat,hit)
-values (2,2,"ggom","서울 광진구 화양동 9-50 1층",5.0,"https://ldb-phinf.pstatic.net/20180531_279/1527725073965wpnIX_JPEG/TAroOfA874YOsnnul2gWw0Az.jpg","010-5137-1675","37.54269611","127.069116","매일",5,5);
+values (2,2,"꼼주","서울 광진구 화양동 9-50 1층",5.0,"https://ldb-phinf.pstatic.net/20180531_279/1527725073965wpnIX_JPEG/TAroOfA874YOsnnul2gWw0Az.jpg","010-5137-1675","37.54269611","127.069116","매일",5,5);
 insert into bar(bar_id,CATEGORY_ID,title,LOCATION,RATING,IMAGE,TEL,lat,log,OPEN_STATUS,group_seat,hit)
 values (3,3,"빈대떡신사","서울 노원구 월계동 379-42",5.0,"https://ldb-phinf.pstatic.net/20180531_279/1527725073965wpnIX_JPEG/TAroOfA874YOsnnul2gWw0Az.jpg","02-774-9595","37.6234669","127.060254","매일",5,10);
 insert into bar(bar_id,CATEGORY_ID,title,LOCATION,RATING,IMAGE,TEL,lat,log,OPEN_STATUS,group_seat,hit)
