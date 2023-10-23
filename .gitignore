@@ -38,3 +38,4 @@ out/
 
 ### my files ###
 application-secret.properties
+application-prod.properties

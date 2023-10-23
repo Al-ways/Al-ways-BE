@@ -24,12 +24,16 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 @SpringBootTest
 class JwtTokenProviderTest {
 
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     private static final String SECRET =
             "testSecretKeytestSecretKeytestSecretKeytestSecretKeytestSecretKeytestSecretKeytestSecretKey";
@@ -52,7 +56,7 @@ class JwtTokenProviderTest {
     @BeforeEach
     void init() {
         this.secretKey = Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
-        this.jwtTokenProvider = new JwtTokenProvider(SECRET);
+        this.jwtTokenProvider = new JwtTokenProvider(SECRET, userDetailsService);
     }
 
 
