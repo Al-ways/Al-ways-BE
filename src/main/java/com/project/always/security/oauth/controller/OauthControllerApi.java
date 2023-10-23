@@ -90,24 +90,6 @@ public class OauthControllerApi {
         return null;
     }
 
-    @PostMapping
-    public ResponseEntity<SuccessResponse> createUserSurvey(
-            @AuthenticationPrincipal UserPrincipal userPrincipal,
-            @RequestBody @Valid UserSurveyRequestDto userSurveyRequestDto) {
-
-        userSurveyService.createUserSurveyOption(UserSurveyRequestDto.builder()
-                .user_id(userPrincipal.getUser().getId())
-                .survey_id(userSurveyRequestDto.getSurvey_id())
-                .select_option(userSurveyRequestDto.getSelect_option())
-                .build());
-
-        return ResponseEntity.ok(
-                SuccessResponse.builder()
-                        .message("member.modifyName.success")
-                        .data("data")
-                        .build());
-    }
-
 //    @GetMapping("/{authProvider}/login")
 //    public String oauthLogin(@AuthenticationPrincipal UserPrincipal userPrincipal,
 //                             @PathVariable AuthProvider authProvider) {

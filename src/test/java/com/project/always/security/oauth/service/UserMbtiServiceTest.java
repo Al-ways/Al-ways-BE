@@ -4,6 +4,7 @@ import static com.project.always.security.oauth.enums.AuthProvider.KAKAO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.project.always.infrastructure.WithMockOAuth2User;
 import com.project.always.mbti.domain.Mbti;
 import com.project.always.mbti.repository.MbtiRepository;
 import com.project.always.security.oauth.dto.request.UserMbtiRequestDto;
@@ -45,9 +46,6 @@ class UserMbtiServiceTest {
     @Autowired
     private UserSurveyRepository userSurveyRepository;
 
-    @Autowired
-    private UserMbtiService userMbtiService;
-
     @DisplayName("유저가 7개 문항을 모두 응답하였다면 패턴을 생성할 수 있다. 일치한 패턴이 있다면 ")
     @Test
     void createUserMbti() throws Exception {
@@ -72,22 +70,14 @@ class UserMbtiServiceTest {
                 .toString());
 
         //when
-
-
-        if (!byPattern.isPresent()) {
-            throw new IllegalArgumentException("일치하지 않는 패턴입니다.");
-        }
-
-        UserMbtiRequestDto request = UserMbtiRequestDto.builder()
-                .mbti_id(byPattern.get().getId())
-                .user_id(user.getId())
-                .build();
-
-        userMbtiService.createUserMbti(request);
+        userMbtiService.createUserMbti(user.getId());
 
         //then
         assertThat(userMbtiRepository.findByUserAndMbti(user, byPattern.get()).isPresent()).isTrue();
     }
+
+    @Autowired
+    private UserMbtiService userMbtiService;
 
     public Survey createSurveyForm(final String questionText, final String option1, final String option2) {
         return Survey.builder()
