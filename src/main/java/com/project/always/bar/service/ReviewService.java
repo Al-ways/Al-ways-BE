@@ -40,4 +40,11 @@ public class ReviewService {
         reviewRepository.delete(review);
         return review;
     }
+
+    @Transactional
+    public Review update(ReviewRequestDTO reviewRequestDTO, Long reviewId) {
+        Review review = reviewRepository.findById(reviewId).orElseThrow(()-> new BarNotFoundException("Could not found bar"));
+
+        return review.update(reviewRequestDTO);
+    }
 }

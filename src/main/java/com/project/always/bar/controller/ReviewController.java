@@ -32,4 +32,9 @@ public class ReviewController {
         return success(reviewResponseMapper.toDto(reviewService.delete(reviewId)));
     }
 
+    @PutMapping("/{id}")
+    public HttpResponseEntity.ResponseResult<BarDTO.ReviewResponseDTO> update(@PathVariable Long id, @RequestBody ReviewRequestDTO reviewRequestDTO){
+
+        return success(reviewResponseMapper.toDto(reviewService.update(reviewRequestDTO,id)));
+    }
 }

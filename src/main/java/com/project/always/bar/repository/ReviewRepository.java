@@ -11,6 +11,6 @@ import java.util.Optional;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
-    //Optional<UserBar> findByUserAndBar(User user, Bar bar);
+    Optional<UserBar> findByUserAndBar(User user, Bar bar);
 
 }

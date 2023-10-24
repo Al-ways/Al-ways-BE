@@ -1,8 +1,10 @@
 package com.project.always.bar.domain;
 
+import com.project.always.bar.dto.ReviewRequestDTO;
 import com.project.always.security.oauth.entity.User;
 import com.project.always.utils.BaseEntity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -36,6 +38,22 @@ public class Review extends BaseEntity {
 
     public void updateUser(User user) {
         this.user = user;
+    }
+
+    public Review update(ReviewRequestDTO reviewRequestDTO) {
+        this.content= content;
+        this.select_rating=select_rating;
+        return this;
+    }
+
+    @Builder
+    public Review(Long id, Bar bar, User user, int select_rating, String content, Date date) {
+        this.id = id;
+        this.bar = bar;
+        this.user = user;
+        this.select_rating = select_rating;
+        this.content = content;
+        this.date = date;
     }
 
 
