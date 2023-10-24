@@ -1,3 +1,4 @@
+import org.hidetake.gradle.swagger.generator.GenerateSwaggerUI
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 buildscript {
@@ -59,6 +60,8 @@ repositories {
 }
 
 
+
+
 dependencies {
 	// spring boot
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -85,7 +88,7 @@ dependencies {
 	// mockmvc
 	testImplementation 'io.rest-assured:spring-mock-mvc'
 
-  // apache
+	// apache
 	implementation 'org.apache.commons:commons-lang3'
 
 	//Rest Docs
@@ -104,11 +107,25 @@ dependencies {
 	//mapstruct
 	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
-//	// querydsl
-//	implementation 'com.querydsl:querydsl-jpa'
-//	implementation 'com.querydsl:querydsl-apt'
+//   // querydsl
+//   implementation 'com.querydsl:querydsl-jpa'
+//   implementation 'com.querydsl:querydsl-apt'
 
 	implementation group: 'org.javassist', name: 'javassist', version: '3.15.0-GA'
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+}
+
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+tasks.named('jar') {
+	dependsOn 'copySwaggerUI'
+}
+
+tasks.named('bootJarMainClassName') {
+	dependsOn 'copySwaggerUI'
 }
 
 // GenerateSwaggerUI 태스크가, openapi3 task 를 의존하도록 설정
@@ -129,12 +146,10 @@ tasks.register('copySwaggerUI', Copy) {
 // bootJar 실행 전, copySwaggerUI 를 실행하도록 설정
 tasks.withType(BootJar) {
 	dependsOn 'copySwaggerUI'
+	bootJar {
+		duplicatesStrategy = 'exclude' // 중복 항목을 제외합니다.
+	}
 }
-
-tasks.named('test') {
-	useJUnitPlatform()
-}
-
 
 //setup asciidoctor
 //asciidoctor {
@@ -160,23 +175,23 @@ tasks.named('test') {
 //def querydslDir = 'src/main/generated'
 //def querydslDir = "$buildDir/generated/querydsl"
 //querydsl {
-//	library = "com.querydsl:querydsl-apt"
-//	jpa = true
-//	querydslSourcesDir = querydslDir
+//   library = "com.querydsl:querydsl-apt"
+//   jpa = true
+//   querydslSourcesDir = querydslDir
 //}
 //
 //sourceSets {
-//	main {
-//		java {
-//			srcDirs = ['src/main/java', querydslDir]
-//		}
-//	}
+//   main {
+//      java {
+//         srcDirs = ['src/main/java', querydslDir]
+//      }
+//   }
 //}
 //
 //compileQuerydsl{
-//	options.annotationProcessorPath = configurations.querydsl
+//   options.annotationProcessorPath = configurations.querydsl
 //}
 //
 //configurations {
-//	querydsl.extendsFrom compileClasspath
+//   querydsl.extendsFrom compileClasspath
 //}

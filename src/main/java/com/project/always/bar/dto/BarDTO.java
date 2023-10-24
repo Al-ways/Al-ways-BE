@@ -10,16 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BarDTO {
     private Long id; //술집번호
-
-
     private String title; //술집이름
-
     private String location; //술집위치
-
     private Double rating;//술집 평점
     private String image; //대표이미지
     private String tel; //전화번호
-
     private String lat; //위도
     private String log; //경도
 

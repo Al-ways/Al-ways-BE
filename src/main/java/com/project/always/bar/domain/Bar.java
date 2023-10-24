@@ -54,4 +54,10 @@ public class Bar {
     public void increaseViewCount(Bar bar){
         bar.hit++;
     }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+
 }
