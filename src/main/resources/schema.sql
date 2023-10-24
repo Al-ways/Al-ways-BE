@@ -197,3 +197,16 @@ INSERT into survey
 values(6, '술집을 고른다면?','한잔한잔이 고급진 칵테일바','무한으로 즐겨요 칵테일 무한리필');
 INSERT into survey
 values(7, '당신이 좋아하는 주류?','소주','맥주');
+
+CREATE TABLE REVIEW (
+    REVIEW_ID BIGINT(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    USER_ID BIGINT(20) NOT NULL,
+    BAR_ID BIGINT(20) NOT NULL,
+    SELECT_RATING INT NULL,
+    REVIEW_CONTENT VARCHAR(255) NULL,
+    FOREIGN KEY (BAR_ID) REFERENCES BAR(BAR_ID),
+    FOREIGN KEY (USER_ID) REFERENCES USER(USER_ID)
+);
+
+
+INSERT INTO REVIEW values (1,1,1,5.0,'좋은 분위기 매우 만족합니다.');
