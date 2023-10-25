@@ -20,4 +20,5 @@ public interface BarRepository extends JpaRepository<Bar,Long> {
     List<Bar> findTop3ByLocationContainingOrderByHitDesc(String location);
 
     List<Bar> findByLocationContainingOrderByRatingDesc(String location);
+
 }

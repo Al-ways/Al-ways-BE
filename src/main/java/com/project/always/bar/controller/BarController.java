@@ -1,10 +1,13 @@
 package com.project.always.bar.controller;
 
 import com.project.always.bar.domain.Bar;
+import com.project.always.bar.domain.Review;
 import com.project.always.bar.dto.BarDTO;
+import com.project.always.bar.error.exception.BarNotFoundException;
 import com.project.always.bar.mapper.BarMapper;
 import com.project.always.bar.repository.BarRepository;
 import com.project.always.bar.service.BarService;
+import com.project.always.bar.service.ReviewService;
 import com.project.always.utils.HttpResponseEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +30,7 @@ public class BarController {
     private final BarService barService;
     private final BarMapper barMapper;
     private final BarRepository barRepository;
+    private final ReviewService reviewService;
     /*@GetMapping("/allbar")
     public ResponseEntity<List<BarDTO>> getList(){
         List<BarDTO> barDTOList = barMapper.toDtoList(barService.findAll());
@@ -82,6 +86,13 @@ public class BarController {
     @GetMapping("/byrating")
     public HttpResponseEntity.ResponseResult<List<BarDTO>> getBarsByLocationSortedByRating(@RequestParam @NotBlank String location){
         return success(barMapper.toDtoList(barService.getBarsByLocationSortedByRating(location)));
+    }
+    //술집별 리뷰 보기
+    @GetMapping("/{id}/reviews")
+    public List<Review> getReviewsByBar(@PathVariable Long id) {
+        Bar bar = barRepository.findById(id)
+                .orElseThrow(() -> new BarNotFoundException("Bar not found with id: " + id));
+        return reviewService.getReviewsByBar(bar);
     }
 
 }

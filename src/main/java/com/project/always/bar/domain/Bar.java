@@ -54,4 +54,12 @@ public class Bar {
     public void increaseViewCount(Bar bar){
         bar.hit++;
     }
+
+    @OneToMany(mappedBy = "bar")
+    private List<Review> reviews = new ArrayList<>();
+
+    public void addReview(Review review) {
+        reviews.add(review);
+        review.updateBar(this);
+    }
 }

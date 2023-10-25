@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ReviewService {
@@ -46,5 +48,9 @@ public class ReviewService {
         Review review = reviewRepository.findById(reviewId).orElseThrow(()-> new BarNotFoundException("Could not found bar"));
 
         return review.update(reviewRequestDTO);
+    }
+
+    public List<Review> getReviewsByBar(Bar bar) {
+        return reviewRepository.findByBar(bar);
     }
 }

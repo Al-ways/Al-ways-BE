@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -31,7 +32,7 @@ public class Review extends BaseEntity {
 
     private int select_rating;
     private String content;
-    private Date date;
+
     public void updateBar(Bar bar) {
         this.bar = bar;
     }
@@ -47,13 +48,12 @@ public class Review extends BaseEntity {
     }
 
     @Builder
-    public Review(Long id, Bar bar, User user, int select_rating, String content, Date date) {
+    public Review(Long id, Bar bar, User user, int select_rating, String content) {
         this.id = id;
         this.bar = bar;
         this.user = user;
         this.select_rating = select_rating;
         this.content = content;
-        this.date = date;
     }
 
 
