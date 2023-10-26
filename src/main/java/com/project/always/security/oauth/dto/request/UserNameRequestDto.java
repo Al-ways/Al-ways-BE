@@ -12,7 +12,6 @@ public class UserNameRequestDto {
 
     private String name;
 
-
     @Builder
     private UserNameRequestDto(String name) {
         this.name = name;

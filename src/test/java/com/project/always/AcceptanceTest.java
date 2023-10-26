@@ -22,6 +22,8 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ExtendWith(RestDocumentationExtension.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 public class AcceptanceTest {
 
     protected static final String DEFAULT_RESTDOC_PATH = "{class_name}/{method_name}/";

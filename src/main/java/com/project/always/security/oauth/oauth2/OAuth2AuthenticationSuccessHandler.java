@@ -51,7 +51,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) {
 
-        log.info("success handler response ={} ",response);
 
         Optional<String> redirectUri = CookieUtils.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME)
                 .map(Cookie::getValue);
@@ -64,7 +63,14 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         //JWT 생성
         UserResponseDto tokenInfo = jwtTokenProvider.generateToken(authentication);
 
-        return UriComponentsBuilder.fromUriString("/api/oauth2/kakao/login")
+        // 토큰정보(리프레시토큰, 엑세스토큰) 를 cookie에 저장
+        response.addHeader("Set-Cookie", tokenInfo.getRefreshToken().toString());
+        response.addHeader("Set-Cookie", tokenInfo.getAccessToken().toString());
+
+        // 헤더정보 추가
+        response.addHeader("Authorization", "Bearer " + tokenInfo.getAccessToken());
+
+        return UriComponentsBuilder.fromUriString(targetUrl) //TODO : oauthRedirectURL
                 .queryParam("token", tokenInfo.getAccessToken())
                 .build().toUriString();
     }

@@ -5,7 +5,6 @@ import com.project.always.security.oauth.entity.User;
 import com.project.always.security.oauth.repository.UserRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

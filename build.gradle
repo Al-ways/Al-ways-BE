@@ -136,6 +136,19 @@ tasks.named('bootJarMainClassName') {
 	dependsOn 'copySwaggerUI'
 }
 
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+tasks.named('jar') {
+	dependsOn 'copySwaggerUI'
+}
+
+tasks.named('bootJarMainClassName') {
+	dependsOn 'copySwaggerUI'
+}
+
 // GenerateSwaggerUI 태스크가, openapi3 task 를 의존하도록 설정
 tasks.withType(GenerateSwaggerUI) {
 	dependsOn 'openapi3'
