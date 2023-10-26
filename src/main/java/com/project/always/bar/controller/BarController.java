@@ -26,7 +26,6 @@ import static com.project.always.utils.HttpResponseEntity.success;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/bar")
-@Controller
 public class BarController {
 
     private final BarService barService;
@@ -55,15 +54,10 @@ public class BarController {
         return success(barMapper.toDto(barService.findById(id)));
     }
 
-    @GetMapping("/bytitle/{title}")
-    public ResponseEntity<List<BarDTO>> findByTitleContaining(@PathVariable String title){
-       List<BarDTO> barDTOList = barMapper.toDtoList(barService.findByTitleContaining(title));
-       return ResponseEntity.ok(barDTOList);
-    }
-    /*@GetMapping("/bytitle")
+    @GetMapping("/bytitle")
     public HttpResponseEntity.ResponseResult<List<BarDTO>> findByTitleContaining(@RequestParam @NotBlank String title){
         return success(barMapper.toDtoList(barService.findByTitleContaining(title)));
-    }*/
+    }
 
     @GetMapping("/bylocation")
     public HttpResponseEntity.ResponseResult<List<BarDTO>> findByLocationContaining(@RequestParam @NotBlank String location){
