@@ -11,5 +11,8 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface BarMapper extends GenericMapper<BarDTO, Bar> {
     BarMapper INSTANCE = Mappers.getMapper(BarMapper.class);
+    //BarDTO toDto(Bar bar);
+
+    //List<BarDTO> toDtoList(List<Bar> bars);
 
 }

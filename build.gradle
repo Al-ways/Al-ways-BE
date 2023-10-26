@@ -58,6 +58,16 @@ configurations {
 repositories {
 	mavenCentral()
 }
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
+compileTestJava {
+	options.encoding = 'UTF-8'
+}
 
 
 dependencies {
@@ -86,7 +96,7 @@ dependencies {
 	// mockmvc
 	testImplementation 'io.rest-assured:spring-mock-mvc'
 
-  // apache
+	// apache
 	implementation 'org.apache.commons:commons-lang3'
 
 	//Rest Docs
@@ -105,11 +115,25 @@ dependencies {
 	//mapstruct
 	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
-//	// querydsl
-//	implementation 'com.querydsl:querydsl-jpa'
-//	implementation 'com.querydsl:querydsl-apt'
+//   // querydsl
+//   implementation 'com.querydsl:querydsl-jpa'
+//   implementation 'com.querydsl:querydsl-apt'
 
 	implementation group: 'org.javassist', name: 'javassist', version: '3.15.0-GA'
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+}
+
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+tasks.named('jar') {
+	dependsOn 'copySwaggerUI'
+}
+
+tasks.named('bootJarMainClassName') {
+	dependsOn 'copySwaggerUI'
 }
 
 
@@ -148,6 +172,7 @@ tasks.withType(BootJar) {
 	}
 }
 
+
 //setup asciidoctor
 //asciidoctor {
 //   inputs.dir snippetsDir
@@ -172,23 +197,23 @@ tasks.withType(BootJar) {
 //def querydslDir = 'src/main/generated'
 //def querydslDir = "$buildDir/generated/querydsl"
 //querydsl {
-//	library = "com.querydsl:querydsl-apt"
-//	jpa = true
-//	querydslSourcesDir = querydslDir
+//   library = "com.querydsl:querydsl-apt"
+//   jpa = true
+//   querydslSourcesDir = querydslDir
 //}
 //
 //sourceSets {
-//	main {
-//		java {
-//			srcDirs = ['src/main/java', querydslDir]
-//		}
-//	}
+//   main {
+//      java {
+//         srcDirs = ['src/main/java', querydslDir]
+//      }
+//   }
 //}
 //
 //compileQuerydsl{
-//	options.annotationProcessorPath = configurations.querydsl
+//   options.annotationProcessorPath = configurations.querydsl
 //}
 //
 //configurations {
-//	querydsl.extendsFrom compileClasspath
+//   querydsl.extendsFrom compileClasspath
 //}
