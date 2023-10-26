@@ -2,6 +2,8 @@ package com.project.always.controller.api;
 
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.config.EncoderConfig;
+import io.restassured.config.RestAssuredConfig;
 import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -44,13 +46,20 @@ public abstract class BaseControllerTest {
     @BeforeEach
     void setUpRestDocs(
             final RestDocumentationContextProvider restDocumentation) {
+        RestAssured.config = RestAssuredConfig.config()
+                .encoderConfig(EncoderConfig.encoderConfig()
+                        .defaultContentCharset("UTF-8")
+                );
 
         this.spec = new RequestSpecBuilder()
                 .setPort(port)
                 .addFilter(documentationConfiguration(restDocumentation)
                         .operationPreprocessors()
                         .withRequestDefaults(prettyPrint())
-                        .withResponseDefaults(prettyPrint()))
+                        .withResponseDefaults(prettyPrint())
+                .and()
+                .snippets()
+                .withEncoding("UTF-8"))
                 .build();
     }
 

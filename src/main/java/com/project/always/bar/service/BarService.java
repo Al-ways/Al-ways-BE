@@ -90,6 +90,7 @@ public class BarService {
     public List<Bar> getBarsByLocationSortedByRating(String location) {
         return barRepository.findByLocationContainingOrderByRatingDesc(location);
     }
+    /*
     @Transactional
     public Long keepBar(MultipartFile image, Bar bar) throws IOException {
         if(!image.isEmpty()) {
@@ -98,5 +99,5 @@ public class BarService {
         }
         Bar savedBar = barRepository.save(bar);
         return savedBar.getId();
-    }
+    }*/
 }

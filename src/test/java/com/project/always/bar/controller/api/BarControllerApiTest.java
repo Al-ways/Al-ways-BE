@@ -9,12 +9,15 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 
 import com.project.always.bar.service.BarService;
 import com.project.always.controller.api.BaseControllerTest;
 import com.project.always.utils.HttpResponseEntity;
 import net.minidev.json.JSONObject;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -77,7 +80,11 @@ public class BarControllerApiTest extends BaseControllerTest {
             fieldWithPath("error").type(JsonFieldType.NULL).description("에러")
 
             );
-
+    @BeforeAll
+    static void setUp() {
+        // UTF-8 인코딩을 설정
+        System.setProperty("file.encoding", "UTF-8");
+    }
     @Transactional
     @DisplayName("get all bar list")
     @Test
@@ -96,26 +103,26 @@ public class BarControllerApiTest extends BaseControllerTest {
                 .statusCode(HttpStatus.OK.value());
 
     }
+
     @DisplayName("get bar list by title")
     @Test
     void barTitleList_test() throws Exception{
-        String title = "꼼주";
-/*
-        net.minidev.json.JSONObject requestBody = new JSONObject();
-        requestBody.put("title", title);
-        List<BarDTO> response = barMapper.toDtoList(barService.findByTitleContaining(title));
-*/
+        String title = "g";
+
+        //net.minidev.json.JSONObject requestBody = new JSONObject();
+        //requestBody.put("title", title);
+
         List<BarDTO> responseList = new ArrayList<>();
         given(this.spec)
-                .filter(document(DEFAULT_RESTDOC_PATH,RESPONSE_FIELDS2))// API 문서 관련 필터 추가
+                .filter(document(DEFAULT_RESTDOC_PATH, RESPONSE_FIELDS2))// API 문서 관련 필터 추가
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .header("Content-type", "application/json")
                 //.body(response)
-                .param("title",title)
+                //.param("title",title)
                 .log().all()
 
                 .when()
-                .get("/bar/bytitle")
+                .get("/bar/bytitle/{title}",title)
 
 
                 .then()
@@ -205,4 +212,42 @@ public class BarControllerApiTest extends BaseControllerTest {
                 .then()
                 .statusCode(HttpStatus.OK.value()); // 술집 번호 2인지 확인;
     }
+    /*@DisplayName("get bar list by title")
+    @Test
+    void barTitleList_test() throws Exception{
+        String title = "꼼주";
+
+        //net.minidev.json.JSONObject requestBody = new JSONObject();
+        //requestBody.put("title", title);
+        //List<BarDTO> response = barMapper.toDtoList(barService.findByTitleContaining(title));
+
+
+        given(this.spec)
+                .filter(document(DEFAULT_RESTDOC_PATH, responseFields(
+                        fieldWithPath("data[].id").type(JsonFieldType.NUMBER).description("술집id"),
+                        fieldWithPath("data[].title").type(JsonFieldType.STRING).description("이름"),
+                        fieldWithPath("data[].location").type(JsonFieldType.STRING).description("위치"),
+                        fieldWithPath("data[].rating").type(JsonFieldType.NUMBER).description("평점"),
+                        fieldWithPath("data[].image").type(JsonFieldType.STRING).description("사진"),
+                        fieldWithPath("data[].tel").type(JsonFieldType.STRING).description("전화번호"),
+                        fieldWithPath("data[].lat").type(JsonFieldType.STRING).description("위도"),
+                        fieldWithPath("data[].log").type(JsonFieldType.STRING).description("경도"),
+                        fieldWithPath("data[].open_status").type(JsonFieldType.STRING).description("영업중"),
+                        fieldWithPath("data[].group_seat").type(JsonFieldType.STRING).description("좌석수"),
+                        fieldWithPath("data[].hit").type(JsonFieldType.NUMBER).description("조회수"))
+                )) // API 문서 관련 필터 추가
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .header("Content-type", "application/json")
+                //.body(response)
+                .param("title",title)
+                .log().all()
+
+                .when()
+                .get("/bar/bytitle")
+
+
+                .then()
+                .statusCode(HttpStatus.OK.value()); // 술집 번호 2인지 확인;
+    }
+    */
 }

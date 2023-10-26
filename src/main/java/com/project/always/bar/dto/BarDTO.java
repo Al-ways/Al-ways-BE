@@ -23,19 +23,19 @@ public class BarDTO {
     private Long hit;//조회수
 
 
-    public BarDTO(Bar bar) {
-        this.id = bar.getId();
-        this.title = bar.getTitle();
-        this.location = bar.getLocation();
-        this.rating = bar.getRating();
-        this.image = bar.getImage();
-        this.tel = bar.getTel();
-        this.lat = bar.getLat();
-        this.log = bar.getLog();
-        this.open_status = bar.getOpen_status();
-        this.group_seat = bar.getGroup_seat();
-        this.hit = bar.getHit();
-    }
+//    public BarDTO(Bar bar) {
+//        this.id = bar.getId();
+//        this.title = bar.getTitle();
+//        this.location = bar.getLocation();
+//        this.rating = bar.getRating();
+//        this.image = bar.getImage();
+//        this.tel = bar.getTel();
+//        this.lat = bar.getLat();
+//        this.log = bar.getLog();
+//        this.open_status = bar.getOpen_status();
+//        this.group_seat = bar.getGroup_seat();
+//        this.hit = bar.getHit();
+//    }
 
     @Builder
     public BarDTO(Long id, String title, String location, Double rating, String image, String tel, String lat, String log, String open_status, String group_seat, Long hit) {

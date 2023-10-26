@@ -6,6 +6,7 @@ import com.project.always.bar.mapper.BarMapper;
 import com.project.always.bar.repository.BarRepository;
 import com.project.always.bar.service.BarService;
 import com.project.always.utils.HttpResponseEntity;
+import com.project.always.utils.SuccessResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -36,6 +37,14 @@ public class BarController {
         List<BarDTO> barDTOList = barMapper.toDtoList(barService.findAll());
         return ResponseEntity.ok(barDTOList);
     }*/
+    /*@GetMapping("/bytitle")
+    public ResponseEntity<SuccessResponse> findByTitleContaining(@RequestParam @NotBlank String title){
+
+        return ResponseEntity.ok(SuccessResponse.builder()
+                .message("get.user.profileImage.success")
+                .data(barService.findByTitleContaining(title))
+                .build());
+    }*/
     @GetMapping("/allbar")
     public HttpResponseEntity.ResponseResult<List<BarDTO>> getList(){
         return success(barMapper.toDtoList(barService.findAll()));
@@ -46,8 +55,8 @@ public class BarController {
         return success(barMapper.toDto(barService.findById(id)));
     }
 
-    @GetMapping("/bytitle")
-    public ResponseEntity<List<BarDTO>> findByTitleContaining(@RequestParam @NotBlank String title){
+    @GetMapping("/bytitle/{title}")
+    public ResponseEntity<List<BarDTO>> findByTitleContaining(@PathVariable String title){
        List<BarDTO> barDTOList = barMapper.toDtoList(barService.findByTitleContaining(title));
        return ResponseEntity.ok(barDTOList);
     }
@@ -92,7 +101,7 @@ public class BarController {
     public HttpResponseEntity.ResponseResult<List<BarDTO>> getBarsByLocationSortedByRating(@RequestParam @NotBlank String location){
         return success(barMapper.toDtoList(barService.getBarsByLocationSortedByRating(location)));
     }
-
+/*
     @ResponseBody
     @PostMapping(value="/imagetest",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Long saveBar(HttpServletRequest request, @RequestParam(value = "image") MultipartFile image, Bar bar) throws IOException{
@@ -103,4 +112,6 @@ public class BarController {
         Long barId = barService.keepBar(image, bar);
         return barId;
     }
+
+ */
 }
