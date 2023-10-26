@@ -59,7 +59,7 @@ class UserControllerApiTest extends AcceptanceTest {
 
         // given
         UserSurveyRequestDto request = UserSurveyRequestDto.builder()
-                .user_id(1L)
+                .user_id(2L)
                 .survey_id(1L)
                 .select_option(1)
                 .build();

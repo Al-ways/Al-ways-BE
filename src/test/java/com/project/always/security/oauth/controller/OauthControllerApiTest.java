@@ -75,7 +75,8 @@ class OauthControllerApiTest extends AcceptanceTest {
                 .name("김철수").build();
 
         // when
-        ResultActions result = mockMvc.perform(put("/api/oauth2/user/name")
+        ResultActions result = mockMvc.perform(
+                put("/api/oauth2/user/name")
                 .header(HttpHeaders.AUTHORIZATION, BEARER_TYPE + "ACCESS_TOKEN")
                 .content(objectMapper.writeValueAsString(dto))
                 .contentType(MediaType.APPLICATION_JSON)

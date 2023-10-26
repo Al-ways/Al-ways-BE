@@ -27,6 +27,10 @@ create table user
 
 insert into user (user_id, email, password, name, auth_provider, oauth2Id,role, profile_image)
 values (1, "test1@naver.com", "test1", "testId1","KAKAO","oauth2IdTest1","ROLE_GUEST","https://test_profile_image");
+insert into user (user_id, email, password, name, auth_provider, oauth2Id,role, profile_image)
+values (2, "test2@naver.com", "test2", "testId2","GOOGLE","oauth2IdTest2","ROLE_GUEST","https://test_profile_image");
+insert into user (user_id, email, password, name, auth_provider, oauth2Id,role, profile_image)
+values (3, "test3@naver.com", "test3", "testId3","NAVER","oauth2IdTest3","ROLE_GUEST","https://test_profile_image");
 
 CREATE TABLE bar_category (
                               CATEGORY_ID   bigint(20)   NOT NULL primary key,
@@ -197,3 +201,18 @@ INSERT into survey
 values(6, '술집을 고른다면?','한잔한잔이 고급진 칵테일바','무한으로 즐겨요 칵테일 무한리필');
 INSERT into survey
 values(7, '당신이 좋아하는 주류?','소주','맥주');
+
+INSERT INTO user_survey
+values(1,1,1,1);
+INSERT INTO user_survey
+values(2,2,1,1);
+INSERT INTO user_survey
+values(3,3,1,1);
+INSERT INTO user_survey
+values(4,4,1,1);
+INSERT INTO user_survey
+values(5,5,1,1);
+INSERT INTO user_survey
+values(6,6,1,1);
+INSERT INTO user_survey
+values(7,7,1,1);
