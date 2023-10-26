@@ -32,6 +32,8 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     private final JwtTokenProvider jwtTokenProvider;
     private final CookieAuthorizationRequestRepository cookieAuthorizationRequestRepository;
 
+    @Value("${app.origin.url}")
+    private String originUrl;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -70,7 +72,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         // 헤더정보 추가
         response.addHeader("Authorization", "Bearer " + tokenInfo.getAccessToken());
 
-        return UriComponentsBuilder.fromUriString(targetUrl) //TODO : oauthRedirectURL
+        return UriComponentsBuilder.fromUriString(originUrl +"/oauth2/redirect")
                 .queryParam("token", tokenInfo.getAccessToken())
                 .build().toUriString();
     }
