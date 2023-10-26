@@ -71,13 +71,12 @@ public class WebSecurityConfigure {
                 .successHandler(oAuth2AuthenticationSuccessHandler)
                 .failureHandler(oAuth2AuthenticationFailureHandler);
 //
-//        http.logout()
-//                .clearAuthentication(true)
-//                .deleteCookies("JSESSIONID");
+        http.logout()
+                .clearAuthentication(true)
+                .deleteCookies("JSESSIONID");
 //
         //jwt filter 설정
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-
         return http.build();
     }
 
