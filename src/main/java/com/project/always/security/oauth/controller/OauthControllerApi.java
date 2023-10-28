@@ -11,9 +11,12 @@ import com.project.always.security.oauth.oauth2.UserPrincipal;
 import com.project.always.security.oauth.service.UserMbtiService;
 import com.project.always.security.oauth.service.UserService;
 import com.project.always.security.oauth.service.UserSurveyService;
+import com.project.always.utils.S3Service;
 import com.project.always.utils.SuccessResponse;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +38,7 @@ public class OauthControllerApi {
 
     private final UserMbtiService userMbtiService;
     private final UserBarService userBarService;
+    private final S3Service s3Service;
 
     private final UserSurveyService userSurveyService;
 
@@ -82,27 +86,27 @@ public class OauthControllerApi {
                 .data(userInfoMypage)
                 .build());
     }
+
+    @PostMapping("/profile/modify")
     public ResponseEntity<SuccessResponse> postProfileImage(
             @AuthenticationPrincipal UserPrincipal userPrincipal,
             @RequestParam("image") MultipartFile imageFile) {
 
         String imageUrl;
 
-//        try {
-//            imageUrl = s3Service.upload(imageFile, "profile");
-//        } catch (Exception e) {
-//            throw new RequestTimeoutException(
-//                    MessageUtil.getMessage("member.uploadProfileImage.failure"));
-//        }
-//        userService.putProfileImage(userPrincipal.getId(), imageUrl);
-//
-//        return ResponseEntity.status(HttpStatus.CREATED).body(
-//                SuccessResponse.builder()
-//                        .httpStatus(HttpStatus.CREATED)
-//                        .data(new ProfileImageDto(imageUrl))
-//                        .build());
+        try {
+            imageUrl = s3Service.upload(imageFile, "profile");
+        } catch (Exception e) {
+            throw new RuntimeException("user.uploadProfileImage.failure");
+        }
+        userService.putProfileImage(userPrincipal.getUser().getId(), imageUrl);
 
-        return null;
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                SuccessResponse.builder()
+                        .httpStatus(HttpStatus.CREATED)
+                        .message("post.user.profileImage.update.success")
+                        .data(new ProfileImageDto(imageUrl))
+                        .build());
     }
 
 //    @GetMapping("/{authProvider}/login")

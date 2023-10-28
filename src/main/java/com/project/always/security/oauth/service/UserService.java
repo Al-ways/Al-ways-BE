@@ -28,6 +28,13 @@ public class UserService {
         return userRepository.findById(id).map(User::getProfileImage);
     }
 
+    @Transactional
+    public void putProfileImage(Long id, String url) {
+        Optional<User> userInfo = userRepository.findById(id);
+
+        userInfo.ifPresent(m -> m.setProfileImage(url));
+    }
+
     public UserMyPageResponseDto getUserInfoMypage(Long id){
 
         Optional<User> user = userRepository.findById(id);
