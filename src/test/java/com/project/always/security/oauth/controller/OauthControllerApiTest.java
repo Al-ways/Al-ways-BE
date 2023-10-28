@@ -19,6 +19,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.always.AcceptanceTest;
 import com.project.always.infrastructure.WithMockOAuth2User;
 import com.project.always.security.oauth.dto.request.UserNameRequestDto;
+import com.project.always.security.oauth.dto.response.UserMyPageResponseDto;
+import com.project.always.security.oauth.enums.AuthProvider;
+import com.project.always.security.oauth.enums.Role;
 import com.project.always.security.oauth.jwt.JwtTokenProvider;
 import com.project.always.security.oauth.service.CustomOAuth2UserService;
 import com.project.always.security.oauth.service.UserService;
@@ -161,6 +164,44 @@ class OauthControllerApiTest extends AcceptanceTest {
 //                        )
 //                ));
 //    }
+    @Test
+    @DisplayName("마이페이지 회원정보 조회 테스트")
+    @WithMockOAuth2User
+    void getUserInfoMypage() throws Exception {
+
+        // given
+        given(userService.getUserInfoMypage(anyLong()))
+                .willReturn(UserMyPageResponseDto.builder()
+                        .id(1L)
+                        .authProvider(AuthProvider.KAKAO)
+                        .name("testName1")
+                        .email("test@test1.com")
+                        .role(Role.ROLE_USER)
+                        .profileImage("https://test_profile_image")
+                        .build());
+
+        // when
+        ResultActions result = mockMvc.perform(get("/api/oauth2/mypage")
+                .header(HttpHeaders.AUTHORIZATION, BEARER_TYPE + "ACCESS_TOKEN"));
+
+        // then
+        result.andExpect(status().isOk())
+                .andDo(document(DEFAULT_RESTDOC_PATH,
+                        requestHeaders(
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("액세스 토큰")
+                        ),
+                        responseFields(
+                                fieldWithPath("status").type(JsonFieldType.NUMBER).description("응답 상태 코드"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("응답 메시지"),
+                                fieldWithPath("data.id").type(JsonFieldType.NUMBER).description("응답 데이터"),
+                                fieldWithPath("data.email").type(JsonFieldType.STRING).description("응답 데이터"),
+                                fieldWithPath("data.name").type(JsonFieldType.STRING).description("응답 데이터"),
+                                fieldWithPath("data.authProvider").type(JsonFieldType.STRING).description("응답 데이터"),
+                                fieldWithPath("data.role").type(JsonFieldType.STRING).description("응답 데이터"),
+                                fieldWithPath("data.profileImage").type(JsonFieldType.STRING).description("응답 데이터")
+                        )
+                ));
+    }
 
 
 }

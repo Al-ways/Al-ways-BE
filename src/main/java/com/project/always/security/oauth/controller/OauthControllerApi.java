@@ -1,9 +1,12 @@
 package com.project.always.security.oauth.controller;
 
+import com.project.always.bar.service.UserBarService;
 import com.project.always.security.oauth.dto.ProfileImageDto;
 import com.project.always.security.oauth.dto.request.UserNameRequestDto;
 import com.project.always.security.oauth.dto.request.UserSurveyRequestDto;
+import com.project.always.security.oauth.dto.response.UserMyPageResponseDto;
 import com.project.always.security.oauth.dto.response.UserResponseDto;
+import com.project.always.security.oauth.entity.User;
 import com.project.always.security.oauth.oauth2.UserPrincipal;
 import com.project.always.security.oauth.service.UserMbtiService;
 import com.project.always.security.oauth.service.UserService;
@@ -31,6 +34,7 @@ public class OauthControllerApi {
     private final UserService userService;
 
     private final UserMbtiService userMbtiService;
+    private final UserBarService userBarService;
 
     private final UserSurveyService userSurveyService;
 
@@ -66,7 +70,18 @@ public class OauthControllerApi {
                 .build());
     }
 
-    @PostMapping("/profile")
+    @GetMapping("/mypage")
+    public ResponseEntity<SuccessResponse> getUserInfoMypage(
+            @AuthenticationPrincipal UserPrincipal userPrincipal) {
+
+        UserMyPageResponseDto userInfoMypage = userService.getUserInfoMypage(
+                userPrincipal.getUser().getId());
+
+        return ResponseEntity.ok(SuccessResponse.builder()
+                .message("get.user.mypage.success")
+                .data(userInfoMypage)
+                .build());
+    }
     public ResponseEntity<SuccessResponse> postProfileImage(
             @AuthenticationPrincipal UserPrincipal userPrincipal,
             @RequestParam("image") MultipartFile imageFile) {
