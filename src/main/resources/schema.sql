@@ -11,6 +11,7 @@ drop table if exists menu_category;
 drop table if exists user_bar;
 drop table if exists bar;
 drop table if exists bar_category;
+drop table if exists user_search;
 drop table if exists user;
 
 create table user
@@ -59,7 +60,7 @@ CREATE TABLE bar (
 );
 
 insert into bar(bar_id,CATEGORY_ID,title,LOCATION,RATING,IMAGE,TEL,lat,log,OPEN_STATUS,group_seat,hit)
-values (1,1,"g","서울 강남구 논현동 80-22",5.0,"https://ldb-phinf.pstatic.net/20180531_279/1527725073965wpnIX_JPEG/TAroOfA874YOsnnul2gWw0Az.jpg","02-518-2078","37.51613021","127.0302467","매일",5,5);
+values (1,1,"고부시","서울 강남구 논현동 80-22",5.0,"https://ldb-phinf.pstatic.net/20180531_279/1527725073965wpnIX_JPEG/TAroOfA874YOsnnul2gWw0Az.jpg","02-518-2078","37.51613021","127.0302467","매일",5,5);
 insert into bar(bar_id,CATEGORY_ID,title,LOCATION,RATING,IMAGE,TEL,lat,log,OPEN_STATUS,group_seat,hit)
 values (2,2,"꼼주","서울 광진구 화양동 9-50 1층",5.0,"https://ldb-phinf.pstatic.net/20180531_279/1527725073965wpnIX_JPEG/TAroOfA874YOsnnul2gWw0Az.jpg","010-5137-1675","37.54269611","127.069116","매일",5,5);
 insert into bar(bar_id,CATEGORY_ID,title,LOCATION,RATING,IMAGE,TEL,lat,log,OPEN_STATUS,group_seat,hit)
@@ -163,29 +164,29 @@ create table user_survey  (
 ) engine=InnoDB;
 
 insert into mbti
-VALUES(1,'사교적 활동가','[1, 1, 1, 1, 1, 1, 1]');
+VALUES(1,'사교적 활동가','[1, 1, 1, 1, 1, 1]');
 insert into mbti
-VALUES(2,'고요한 청년','[1, 1, 1, 1, 1, 1, 2]');
+VALUES(2,'고요한 청년','[1, 1, 1, 1, 1, 2]');
 insert into mbti
-VALUES(3,'탐험가','[1, 1, 1, 1, 1, 2, 1]');
+VALUES(3,'탐험가','[1, 1, 1, 1, 2, 1]');
 insert into mbti
-VALUES(4,'자연 속의 술주인','[1, 1, 1, 1, 1, 2, 2]');
+VALUES(4,'자연 속의 술주인','[1, 1, 1, 1, 2, 2]');
 insert into mbti
-VALUES(5,'감성충만 예술감상가','[1, 1, 1, 1, 2, 1, 1]');
+VALUES(5,'감성충만 예술감상가','[1, 1, 1, 2, 1, 1]');
 insert into mbti
-VALUES(6,'매력적인 인플루언서','[1, 1, 1, 1, 2, 1, 2]');
+VALUES(6,'매력적인 인플루언서','[1, 1, 1, 2, 1, 2]');
 insert into mbti
-VALUES(7,'문화적 탐험가','[1, 1, 1, 1, 2, 2, 1]');
+VALUES(7,'문화적 탐험가','[1, 1, 1, 2, 2, 1]');
 insert into mbti
-VALUES(8,'휴식을 즐기는 로맨티스트','[1, 1, 1, 1, 2, 2, 2]');
+VALUES(8,'휴식을 즐기는 로맨티스트','[1, 1, 1, 2, 2, 2]');
 insert into mbti
-VALUES(9,'음식 중심의 미식가','[1, 1, 1, 2, 1, 1, 1]');
+VALUES(9,'음식 중심의 미식가','[1, 1, 2, 1, 1, 1]');
 insert into mbti
-VALUES(10,'자유로운 예술가','[1, 1, 1, 2, 1, 1, 2]');
+VALUES(10,'자유로운 예술가','[1, 1, 2, 1, 1, 2]');
 insert into mbti
-VALUES(11,'현실주의자','[1, 1, 1, 2, 1, 2, 1]');
+VALUES(11,'현실주의자','[1, 1, 2, 1, 2, 1]');
 insert into mbti
-VALUES(12,'도전과 열정의 미식가','[1, 1, 1, 2, 1, 2, 2]');
+VALUES(12,'도전과 열정의 미식가','[1, 1, 2, 1, 2, 2]');
 
 INSERT into survey
 values(1, '나의 술 모임 성향은?','4인 이상의 술자리가 좋아','4인은 좀.. 3인 이하가 좋아');
@@ -199,8 +200,6 @@ INSERT into survey
 values(5, '안주를 고른다면?','양이 많고 값이 싼','양이 적고 비싸지만 이쁘고 맛있는');
 INSERT into survey
 values(6, '술집을 고른다면?','한잔한잔이 고급진 칵테일바','무한으로 즐겨요 칵테일 무한리필');
-INSERT into survey
-values(7, '당신이 좋아하는 주류?','소주','맥주');
 
 INSERT INTO user_survey
 values(1,1,1,1);
@@ -214,5 +213,6 @@ INSERT INTO user_survey
 values(5,5,1,1);
 INSERT INTO user_survey
 values(6,6,1,1);
-INSERT INTO user_survey
-values(7,7,1,1);
+
+INSERT INTO user_mbti
+values(1,1,1);
