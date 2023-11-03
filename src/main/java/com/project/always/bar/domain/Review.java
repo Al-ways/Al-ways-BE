@@ -1,5 +1,6 @@
 package com.project.always.bar.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.always.bar.dto.ReviewRequestDTO;
 import com.project.always.security.oauth.entity.User;
 import com.project.always.utils.BaseEntity;
@@ -15,7 +16,7 @@ import java.util.Date;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Review extends BaseEntity {
+public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,13 +25,15 @@ public class Review extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bar_id")
+    //@JsonIgnore
     private Bar bar;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    //@JsonIgnore
     private User user;
 
-    private int select_rating;
+    private double select_rating;
     private String content;
 
     public void updateBar(Bar bar) {

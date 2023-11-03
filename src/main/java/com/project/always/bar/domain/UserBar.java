@@ -1,5 +1,6 @@
 package com.project.always.bar.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.always.bar.domain.Bar;
 import com.project.always.security.oauth.entity.User;
 import lombok.AccessLevel;
@@ -14,7 +15,7 @@ import java.io.Serializable;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class UserBar implements Serializable {
+public class UserBar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_bar_id")
@@ -22,10 +23,12 @@ public class UserBar implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bar_id")
+    //@JsonIgnore
     private Bar bar;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    //@JsonIgnore
     private User user;
 
     @Builder

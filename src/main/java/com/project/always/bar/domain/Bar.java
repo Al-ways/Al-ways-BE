@@ -1,5 +1,6 @@
 package com.project.always.bar.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.always.utils.BaseEntity;
 
 import javax.persistence.*;
@@ -39,6 +40,7 @@ public class Bar {
     private Long hit;//조회수
 
     @OneToMany(mappedBy = "bar")
+    //@JsonIgnore
     private List<UserBar> userBars = new ArrayList<>();
 
     @OneToMany(mappedBy = "bar")
@@ -56,6 +58,7 @@ public class Bar {
     }
 
     @OneToMany(mappedBy = "bar")
+    //@JsonIgnore
     private List<Review> reviews = new ArrayList<>();
 
     public void addReview(Review review) {

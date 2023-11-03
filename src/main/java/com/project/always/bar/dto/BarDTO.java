@@ -58,5 +58,6 @@ public class BarDTO {
     }
 
     public static class ReviewResponseDTO {
+
     }
 }

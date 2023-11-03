@@ -53,4 +53,12 @@ public class ReviewService {
     public List<Review> getReviewsByBar(Bar bar) {
         return reviewRepository.findByBar(bar);
     }
+
+    public List<Review> getReviewsByBarId(Long id) {
+        return reviewRepository.findByBarId(id);
+    }
+
+    public List<Review> getReviewsByUserId(Long id) {
+        return reviewRepository.findByUserId(id);
+    }
 }

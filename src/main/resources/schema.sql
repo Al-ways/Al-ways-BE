@@ -198,15 +198,15 @@ values(6, '술집을 고른다면?','한잔한잔이 고급진 칵테일바','�
 INSERT into survey
 values(7, '당신이 좋아하는 주류?','소주','맥주');
 
-CREATE TABLE review (
-    REVIEW_ID BIGINT(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    USER_ID BIGINT(20) NOT NULL,
-    BAR_ID BIGINT(20) NOT NULL,
-    SELECT_RATING INT NULL,
-    CONTENT VARCHAR(255) NULL,
-    FOREIGN KEY (BAR_ID) REFERENCES BAR(BAR_ID),
-    FOREIGN KEY (USER_ID) REFERENCES USER(USER_ID)
+create table review (
+    review_id bigint(20) not null auto_increment primary key,
+    user_id bigint(20) not null,
+    bar_id bigint(20) not null,
+    select_rating double null,
+    content varchar(255) null,
+    foreign key (bar_id) references bar(bar_id),
+    foreign key (user_id) references user(user_id)
 );
 
 
-INSERT INTO review values (1,1,1,5.0,'좋은 분위기 매우 만족합니다.');
+INSERT INTO review values (1,1,1,5,'좋은 분위기 매우 만족합니다.');
