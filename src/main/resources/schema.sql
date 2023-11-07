@@ -1,3 +1,7 @@
+drop table if exists community_file;
+drop table if exists file;
+drop table if exists community;
+drop table if exists community_category;
 drop table if exists review;
 drop table if exists image;
 drop table if exists tag_bar;
@@ -210,3 +214,45 @@ create table review (
 
 
 INSERT INTO review values (1,1,1,5,'좋은 분위기 매우 만족합니다.');
+
+
+create table file (
+                      file_id 	bigint(20)	not null auto_increment primary key ,
+                      name	varchar(255)	not null,
+                      org_name	varchar(255)	null
+);
+create table community_category (
+                                    category_id   bigint(20)   not null primary key,
+                                    name   varchar(255)   null
+);
+create table community (
+                           post_id 	bigint(20)	 not null  auto_increment primary key,
+                           user_id	bigint(20)	not null,
+                           category_id	bigint(20)	not null,
+                           title	varchar(255)	not null,
+                           content	blob	null,
+                           status	varchar(255)	null,
+                           registration_date	datetime	null,
+                           update_date	datetime	null,
+                           delete_date	datetime	null,
+                           hit	varchar(255)	null,
+                        foreign key(user_id) references user(user_id),
+                               foreign key(category_id) references community_category(category_id)
+);
+create table community_file (
+                                community_file_id   bigint(20)   not null auto_increment primary key,
+                                post_id   bigint(20)   not null,
+                                file_id   bigint(20)   not null,
+                                foreign key(post_id) references community(post_id),
+                                foreign key(file_id) references file(file_id)
+);
+insert into community_category(category_id, name) values (1,'자유게시판');
+insert into community_category(category_id, name) values (2,'분위기 좋은 술집');
+insert into community_category(category_id, name) values (3,'강남구 술집 추천');
+insert into community_category(category_id, name) values (4,'동작구 술집 추천');
+
+insert into community (post_id,user_id,category_id,title,content) values(1,1,1,'안녕하세요','반갑습니다!');
+insert into community (post_id,user_id,category_id,title,content) values(2,1,1,'내가 글을 올린다','이건 두번째 게시글!');
+
+insert into file (file_id,name,org_name) values(1,'1','https://ldb-phinf.pstatic.net/20180531_279/1527725073965wpnIX_JPEG/TAroOfA874YOsnnul2gWw0Az.jpg');
+insert into community_file(community_file_id, post_id, file_id) values (1,1,1);
