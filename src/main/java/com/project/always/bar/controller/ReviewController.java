@@ -9,6 +9,7 @@ import com.project.always.utils.HttpResponseEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,13 +32,14 @@ public class ReviewController {
         return success();
     }
 
-    @DeleteMapping
+    @Transactional
+    @DeleteMapping("/delete")
     public HttpResponseEntity.ResponseResult<String> delete(@RequestParam Long reviewId){
         reviewService.delete(reviewId);
         return success();
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public HttpResponseEntity.ResponseResult<String> update(@PathVariable Long id, @RequestBody ReviewRequestDTO reviewRequestDTO){
         reviewService.update(reviewRequestDTO,id);
         return success();
