@@ -2,6 +2,7 @@ package com.project.always.community.service;
 
 import com.project.always.bar.error.exception.BarNotFoundException;
 import com.project.always.community.domain.Community;
+import com.project.always.community.domain.CommunityCategory;
 import com.project.always.community.dto.CommunityRequestDTO;
 import com.project.always.community.mapper.CommunityRequestMapper;
 import com.project.always.community.repository.CommunityRepository;
@@ -20,11 +21,15 @@ public class CommunityService {
     private final CommunityRequestMapper communityRequestMapper;
     @Transactional
     public Community insert(CommunityRequestDTO communityRequestDTO) {
-        User user = userRepository.findById((communityRequestDTO.getUserId()))
-                .orElseThrow(()-> new BarNotFoundException("Could not found user id : " + communityRequestDTO.getUserId()));
+        User user = userRepository.findById((communityRequestDTO.getUser_id()))
+                .orElseThrow(()-> new BarNotFoundException("Could not found user id : " + communityRequestDTO.getUser_id()));
+
         Community community = communityRequestMapper.toEntity(communityRequestDTO);
 
         community.updateUser(user);
+        System.out.println("community.getContent() = " + community.getContent());
+        System.out.println("community.getTitle() = " + community.getTitle());
+
         return communityRepository.save(community);
     }
 }

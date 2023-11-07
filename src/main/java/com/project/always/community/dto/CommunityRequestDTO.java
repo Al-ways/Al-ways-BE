@@ -13,13 +13,13 @@ import java.util.Date;
 @NoArgsConstructor
 public class CommunityRequestDTO {
     private Long category_id;
-    private Long userId;
+    private Long user_id;
     private String title;
     private String content;
 
-    public CommunityRequestDTO(Long category_id, Long userId, String title, String content) {
+    public CommunityRequestDTO(Long category_id, Long user_id, String title, String content) {
         this.category_id = category_id;
-        this.userId = userId;
+        this.user_id = user_id;
         this.title = title;
         this.content = content;
     }

@@ -17,7 +17,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.requestF
 class CommunityControllerTest extends BaseControllerTest {
     private static final Snippet REQUEST_FIELDS = requestFields(
             fieldWithPath("category_id").type(JsonFieldType.NUMBER).description("카테고리아이디"),
-            fieldWithPath("userId").type(JsonFieldType.NUMBER).description("유저아이디"),
+            fieldWithPath("user_id").type(JsonFieldType.NUMBER).description("유저아이디"),
             fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
             fieldWithPath("content").type(JsonFieldType.STRING).description("내용")
     );
@@ -25,7 +25,7 @@ class CommunityControllerTest extends BaseControllerTest {
     void insert()  throws Exception{
         net.minidev.json.JSONObject requestBody = new JSONObject();
         requestBody.put("category_id", 1);
-        requestBody.put("userId",1);
+        requestBody.put("user_id",1);
         requestBody.put("title","오늘은 맛집에 갔다");
         requestBody.put("content","너무 맛있고 분위기 좋아요");
 
