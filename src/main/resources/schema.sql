@@ -228,7 +228,7 @@ create table community_category (
 create table community (
                            post_id 	bigint(20)	 not null  auto_increment primary key,
                            user_id	bigint(20)	not null,
-                           category_id	bigint(20)	not null,
+                           category_id	bigint(20) null,
                            title	varchar(255)	not null,
                            content	blob	null,
                            status	varchar(255)	null,

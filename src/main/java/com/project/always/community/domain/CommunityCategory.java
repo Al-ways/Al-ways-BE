@@ -18,4 +18,8 @@ public class CommunityCategory {
     private Long id; //카테고리번호
     private String name;//카테고리이름
 
+    @OneToMany(mappedBy = "communityCategory")
+    private List<Community> communities = new ArrayList<>();
+
+
 }

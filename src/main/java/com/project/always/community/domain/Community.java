@@ -23,7 +23,9 @@ public class Community {
     //@JsonIgnore
     private User user;
 
-    private Long category_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private CommunityCategory communityCategory;
 
     private String title;
     private String content;
@@ -35,4 +37,8 @@ public class Community {
 
     @OneToMany(mappedBy = "community")
     private List<CommunityFile> communityFiles = new ArrayList<>();
+
+    public void updateUser(User user) {
+        this.user = user;
+    }
 }
