@@ -1,9 +1,12 @@
 package com.project.always.community.domain;
 
+import com.project.always.community.dto.CommunityRequestDTO;
 import com.project.always.security.oauth.entity.User;
+import com.project.always.utils.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,7 +16,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Community {
+public class Community extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")
@@ -26,34 +29,37 @@ public class Community {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
+    @Setter
     private CommunityCategory communityCategory;
 
     private String title;
     private String content;
-    private String status;
-    private Date registration_date;
-    private Date update_date;
-    private Date delete_date;
+    private String status;//필요할까?
+//    private Date registration_date;
+//    private Date update_date;
+//    private Date delete_date;
+    @Setter
     private Long hit;
 
-    @OneToMany(mappedBy = "community")
+    @OneToMany(mappedBy = "community",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CommunityFile> communityFiles = new ArrayList<>();
 
     public void updateUser(User user) {
         this.user = user;
     }
     @Builder
-    public Community(Long id, User user, CommunityCategory communityCategory, String title, String content, String status, Date registration_date, Date update_date, Date delete_date, Long hit, List<CommunityFile> communityFiles) {
+    public Community(Long id, User user, String title, String content, Long hit) {
         this.id = id;
         this.user = user;
-        this.communityCategory = communityCategory;
         this.title = title;
         this.content = content;
-        this.status = status;
-        this.registration_date = registration_date;
-        this.update_date = update_date;
-        this.delete_date = delete_date;
         this.hit = hit;
-        this.communityFiles = communityFiles;
+    }
+
+
+
+    public void update(CommunityRequestDTO communityRequestDTO) {
+        this.content=communityRequestDTO.getContent();
+        this.title=communityRequestDTO.getTitle();
     }
 }

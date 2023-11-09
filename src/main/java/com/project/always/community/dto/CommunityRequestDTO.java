@@ -17,6 +17,7 @@ public class CommunityRequestDTO {
     private String title;
     private String content;
 
+
     public CommunityRequestDTO(Long category_id, Long user_id, String title, String content) {
         this.category_id = category_id;
         this.user_id = user_id;

@@ -31,8 +31,8 @@ public class ReviewService {
                 .orElseThrow(()-> new BarNotFoundException("Could not found bar id : " + reviewRequestDTO.getBarId()));
         Review review = reviewRequestMapper.toEntity(reviewRequestDTO);
 
-        review.updateUser(user);
-        review.updateBar(bar);
+        review.setUser(user);
+        review.setBar(bar);
         return reviewRepository.save(review);
     }
 

@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.always.bar.dto.ReviewRequestDTO;
 import com.project.always.security.oauth.entity.User;
 import com.project.always.utils.BaseEntity;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -25,28 +22,22 @@ public class Review {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bar_id")
+    @Setter
     //@JsonIgnore
     private Bar bar;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @Setter
     //@JsonIgnore
     private User user;
 
     private double select_rating;
     private String content;
 
-    public void updateBar(Bar bar) {
-        this.bar = bar;
-    }
-
-    public void updateUser(User user) {
-        this.user = user;
-    }
-
     public Review update(ReviewRequestDTO reviewRequestDTO) {
-        this.content= content;
-        this.select_rating=select_rating;
+        this.content= reviewRequestDTO.getContent();
+        this.select_rating=reviewRequestDTO.getSelect_rating();
         return this;
     }
 

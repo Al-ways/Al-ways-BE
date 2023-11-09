@@ -63,6 +63,6 @@ public class Bar {
 
     public void addReview(Review review) {
         reviews.add(review);
-        review.updateBar(this);
+        review.setBar(this);
     }
 }

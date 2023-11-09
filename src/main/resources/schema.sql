@@ -41,6 +41,7 @@ insert into bar_category(category_id, name) values (2,"실내포장마차");
 insert into bar_category(category_id, name) values (3,"호프요리주점");
 insert into bar_category(category_id, name) values (4,"칵테일바");
 insert into bar_category(category_id, name) values (5,"와인바");
+insert into bar_category(category_id, name) values (6,"오뎅바");
 
 CREATE TABLE bar (
                      BAR_ID   bigint(20)   NOT NULL auto_increment primary key,
@@ -228,14 +229,14 @@ create table community_category (
 create table community (
                            post_id 	bigint(20)	 not null  auto_increment primary key,
                            user_id	bigint(20)	not null,
-                           category_id	bigint(20) null,
+                           category_id	bigint(20) default 1,
                            title	varchar(255)	not null,
                            content	blob	null,
                            status	varchar(255)	null,
-                           registration_date	datetime	null,
-                           update_date	datetime	null,
-                           delete_date	datetime	null,
-                           hit	varchar(255)	null,
+                           created_at	datetime	default now(),
+                           modified_at	datetime	default now(),
+--                           delete_date	datetime	null,
+                           hit	bigint(20)	default 0,
                         foreign key(user_id) references user(user_id),
                                foreign key(category_id) references community_category(category_id)
 );
