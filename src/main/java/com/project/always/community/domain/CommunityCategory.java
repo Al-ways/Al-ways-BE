@@ -1,6 +1,5 @@
-package com.project.always.bar.domain;
+package com.project.always.community.domain;
 
-import com.project.always.utils.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,16 +11,15 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-
-public class MenuCategory {
+public class CommunityCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "menu_category_id")
+    @Column(name = "category_id")
     private Long id; //카테고리번호
+    private String name;//카테고리이름
 
-    private String name;//카테고리명
-    private String grade;//카테고리등급
+    @OneToMany(mappedBy = "communityCategory")
+    private List<Community> communities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "menuCategory")
-    List<Menu> menus = new ArrayList<>();
+
 }

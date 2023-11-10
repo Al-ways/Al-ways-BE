@@ -1,3 +1,8 @@
+drop table if exists community_file;
+drop table if exists file;
+drop table if exists community;
+drop table if exists community_category;
+
 drop table if exists review;
 drop table if exists image;
 drop table if exists tag_bar;
@@ -41,6 +46,8 @@ insert into bar_category(category_id, name) values (2,"실내포장마차");
 insert into bar_category(category_id, name) values (3,"호프요리주점");
 insert into bar_category(category_id, name) values (4,"칵테일바");
 insert into bar_category(category_id, name) values (5,"와인바");
+insert into bar_category(category_id, name) values (6,"오뎅바");
+
 
 CREATE TABLE bar (
                      BAR_ID   bigint(20)   NOT NULL auto_increment primary key,
@@ -59,7 +66,8 @@ CREATE TABLE bar (
 );
 
 insert into bar(bar_id,CATEGORY_ID,title,LOCATION,RATING,IMAGE,TEL,lat,log,OPEN_STATUS,group_seat,hit)
-values (1,1,"g","서울 강남구 논현동 80-22",5.0,"https://ldb-phinf.pstatic.net/20180531_279/1527725073965wpnIX_JPEG/TAroOfA874YOsnnul2gWw0Az.jpg","02-518-2078","37.51613021","127.0302467","매일",5,5);
+values (1,1,"고부시","서울 강남구 논현동 80-22",5.0,"https://ldb-phinf.pstatic.net/20180531_279/1527725073965wpnIX_JPEG/TAroOfA874YOsnnul2gWw0Az.jpg","02-518-2078","37.51613021","127.0302467","매일",5,5);
+
 insert into bar(bar_id,CATEGORY_ID,title,LOCATION,RATING,IMAGE,TEL,lat,log,OPEN_STATUS,group_seat,hit)
 values (2,2,"꼼주","서울 광진구 화양동 9-50 1층",5.0,"https://ldb-phinf.pstatic.net/20180531_279/1527725073965wpnIX_JPEG/TAroOfA874YOsnnul2gWw0Az.jpg","010-5137-1675","37.54269611","127.069116","매일",5,5);
 insert into bar(bar_id,CATEGORY_ID,title,LOCATION,RATING,IMAGE,TEL,lat,log,OPEN_STATUS,group_seat,hit)
@@ -136,6 +144,7 @@ CREATE TABLE mbti(
                      mbti_id bigint not null auto_increment primary key,
                      name varchar(30) null,
                      pattern varchar(30) null
+
 );
 
 create table user_mbti (
@@ -202,17 +211,59 @@ values(6, '술집을 고른다면?','한잔한잔이 고급진 칵테일바','�
 INSERT into survey
 values(7, '당신이 좋아하는 주류?','소주','맥주');
 
-INSERT INTO user_survey
-values(1,1,1,1);
-INSERT INTO user_survey
-values(2,2,1,1);
-INSERT INTO user_survey
-values(3,3,1,1);
-INSERT INTO user_survey
-values(4,4,1,1);
-INSERT INTO user_survey
-values(5,5,1,1);
-INSERT INTO user_survey
-values(6,6,1,1);
-INSERT INTO user_survey
-values(7,7,1,1);
+create table review (
+    review_id bigint(20) not null auto_increment primary key,
+    user_id bigint(20) not null,
+    bar_id bigint(20) not null,
+    select_rating double null,
+    content varchar(255) null,
+    foreign key (bar_id) references bar(bar_id),
+    foreign key (user_id) references user(user_id)
+);
+
+
+INSERT INTO review values (1,1,1,5,'좋은 분위기 매우 만족합니다.');
+
+
+create table file (
+                      file_id 	bigint(20)	not null auto_increment primary key ,
+                      name	varchar(255)	not null,
+                      org_name	varchar(255)	null
+);
+create table community_category (
+                                    category_id   bigint(20)   not null primary key,
+                                    name   varchar(255)   null
+);
+create table community (
+                           post_id 	bigint(20)	 not null  auto_increment primary key,
+                           user_id	bigint(20)	not null,
+                           category_id	bigint(20) default 1,
+                           title	varchar(255)	not null,
+                           content	blob	null,
+                           status	varchar(255)	null,
+                           created_at	datetime	default now(),
+                           modified_at	datetime	default now(),
+--                           delete_date	datetime	null,
+                           hit	bigint(20)	default 0,
+                        foreign key(user_id) references user(user_id),
+                               foreign key(category_id) references community_category(category_id)
+);
+create table community_file (
+                                community_file_id   bigint(20)   not null auto_increment primary key,
+                                post_id   bigint(20)   not null,
+                                file_id   bigint(20)   not null,
+                                foreign key(post_id) references community(post_id),
+                                foreign key(file_id) references file(file_id)
+
+);
+insert into community_category(category_id, name) values (1,'자유게시판');
+insert into community_category(category_id, name) values (2,'분위기 좋은 술집');
+insert into community_category(category_id, name) values (3,'강남구 술집 추천');
+insert into community_category(category_id, name) values (4,'동작구 술집 추천');
+
+insert into community (post_id,user_id,category_id,title,content) values(1,1,1,'안녕하세요','반갑습니다!');
+insert into community (post_id,user_id,category_id,title,content) values(2,1,1,'내가 글을 올린다','이건 두번째 게시글!');
+
+insert into file (file_id,name,org_name) values(1,'1','https://ldb-phinf.pstatic.net/20180531_279/1527725073965wpnIX_JPEG/TAroOfA874YOsnnul2gWw0Az.jpg');
+insert into community_file(community_file_id, post_id, file_id) values (1,1,1);
+

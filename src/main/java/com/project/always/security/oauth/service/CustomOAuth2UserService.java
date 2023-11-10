@@ -80,5 +80,5 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     private User updateUser(User user, OAuth2UserInfo oAuth2UserInfo) {
         return userRepository.save(user.update(oAuth2UserInfo));
     }
-    
+
 }

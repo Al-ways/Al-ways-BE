@@ -1,10 +1,16 @@
 package com.project.always.bar.controller;
 
 import com.project.always.bar.domain.Bar;
+import com.project.always.bar.domain.Review;
 import com.project.always.bar.dto.BarDTO;
+import com.project.always.bar.dto.ReviewDTO;
+import com.project.always.bar.error.exception.BarNotFoundException;
 import com.project.always.bar.mapper.BarMapper;
+import com.project.always.bar.mapper.ReviewMapper;
 import com.project.always.bar.repository.BarRepository;
 import com.project.always.bar.service.BarService;
+import com.project.always.bar.service.ReviewService;
+import com.project.always.utils.GenericMapper;
 import com.project.always.utils.HttpResponseEntity;
 import com.project.always.utils.SuccessResponse;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.io.IOException;
 import java.util.List;
 
@@ -31,6 +38,8 @@ public class BarController {
     private final BarService barService;
     private final BarMapper barMapper;
     private final BarRepository barRepository;
+
+
     /*@GetMapping("/allbar")
     public ResponseEntity<List<BarDTO>> getList(){
         List<BarDTO> barDTOList = barMapper.toDtoList(barService.findAll());
@@ -106,6 +115,5 @@ public class BarController {
         Long barId = barService.keepBar(image, bar);
         return barId;
     }
-
  */
 }
