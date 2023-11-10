@@ -67,7 +67,6 @@ CREATE TABLE bar (
 
 insert into bar(bar_id,CATEGORY_ID,title,LOCATION,RATING,IMAGE,TEL,lat,log,OPEN_STATUS,group_seat,hit)
 values (1,1,"고부시","서울 강남구 논현동 80-22",5.0,"https://ldb-phinf.pstatic.net/20180531_279/1527725073965wpnIX_JPEG/TAroOfA874YOsnnul2gWw0Az.jpg","02-518-2078","37.51613021","127.0302467","매일",5,5);
-
 insert into bar(bar_id,CATEGORY_ID,title,LOCATION,RATING,IMAGE,TEL,lat,log,OPEN_STATUS,group_seat,hit)
 values (2,2,"꼼주","서울 광진구 화양동 9-50 1층",5.0,"https://ldb-phinf.pstatic.net/20180531_279/1527725073965wpnIX_JPEG/TAroOfA874YOsnnul2gWw0Az.jpg","010-5137-1675","37.54269611","127.069116","매일",5,5);
 insert into bar(bar_id,CATEGORY_ID,title,LOCATION,RATING,IMAGE,TEL,lat,log,OPEN_STATUS,group_seat,hit)
@@ -211,6 +210,7 @@ values(6, '술집을 고른다면?','한잔한잔이 고급진 칵테일바','�
 INSERT into survey
 values(7, '당신이 좋아하는 주류?','소주','맥주');
 
+
 create table review (
     review_id bigint(20) not null auto_increment primary key,
     user_id bigint(20) not null,
@@ -266,4 +266,3 @@ insert into community (post_id,user_id,category_id,title,content) values(2,1,1,'
 
 insert into file (file_id,name,org_name) values(1,'1','https://ldb-phinf.pstatic.net/20180531_279/1527725073965wpnIX_JPEG/TAroOfA874YOsnnul2gWw0Az.jpg');
 insert into community_file(community_file_id, post_id, file_id) values (1,1,1);
-
