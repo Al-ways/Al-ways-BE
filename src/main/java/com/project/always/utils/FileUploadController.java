@@ -3,7 +3,7 @@ package com.project.always.utils;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,18 +21,18 @@ public class FileUploadController {
 
     private final AmazonS3 amazonS3Client;
 
-    //@Value("${cloud.aws.s3.bucket}")
+    @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
     @PostMapping
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
         try {
             String fileName=file.getOriginalFilename();
-            String fileUrl= "https://" + "alwaysproject" + "/test" +fileName;
+            String fileUrl= "https://" + bucket + "/test" +fileName;
             ObjectMetadata metadata= new ObjectMetadata();
             metadata.setContentType(file.getContentType());
             metadata.setContentLength(file.getSize());
-            amazonS3Client.putObject("alwaysproject",fileName,file.getInputStream(),metadata);
+            amazonS3Client.putObject(bucket,fileName,file.getInputStream(),metadata);
             return ResponseEntity.ok(fileUrl);
         } catch (IOException e) {
             e.printStackTrace();

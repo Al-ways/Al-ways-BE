@@ -1,6 +1,8 @@
 package com.project.always.security.oauth.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.always.bar.domain.UserBar;
+import com.project.always.community.domain.Community;
 import com.project.always.security.oauth.enums.Role;
 import com.project.always.security.oauth.oauth2.OAuth2UserInfo;
 
@@ -45,8 +47,13 @@ public class User {
 
     @Column(length = 512)
     private String profileImage;
+
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<UserBar> userBars = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Community> communities = new ArrayList<>();
 
 
     public User update(OAuth2UserInfo oAuth2UserInfo) {
@@ -70,4 +77,7 @@ public class User {
   
     public void setName(String name) {this.name = name;}
 
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
+    }
 }
