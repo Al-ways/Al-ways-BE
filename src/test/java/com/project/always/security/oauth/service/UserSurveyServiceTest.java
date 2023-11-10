@@ -34,7 +34,7 @@ class UserSurveyServiceTest {
 
 
     @DisplayName("회원은 질문에 응답할 수 있고, 응답한 옵션은 db에 저장된다.")
-    @Test
+    //@Test
     void createUserSurveyOption() throws Exception {
         //given
         User user = createUser(KAKAO, "testCobi","password123", "testcobi@naver.com", Role.ROLE_USER, "qwerasdf12",

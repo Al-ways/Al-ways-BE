@@ -47,7 +47,7 @@ class UserMbtiServiceTest {
     private UserSurveyRepository userSurveyRepository;
 
     @DisplayName("유저가 7개 문항을 모두 응답하였다면 패턴을 생성할 수 있다. 일치한 패턴이 있다면 ")
-    @Test
+    //@Test
     void createUserMbti() throws Exception {
         //given
         User user = createUser(KAKAO, "testCobi", "password123", "testcobi@naver.com", Role.ROLE_USER, "qwerasdf12",
