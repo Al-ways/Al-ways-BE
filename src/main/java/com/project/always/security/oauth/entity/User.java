@@ -45,6 +45,7 @@ public class User {
 
     @Column(length = 512)
     private String profileImage;
+
     @OneToMany(mappedBy = "user")
     private List<UserBar> userBars = new ArrayList<>();
 
@@ -70,4 +71,7 @@ public class User {
   
     public void setName(String name) {this.name = name;}
 
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
+    }
 }
