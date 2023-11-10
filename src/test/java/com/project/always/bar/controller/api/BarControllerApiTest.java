@@ -9,12 +9,15 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 
 import com.project.always.bar.service.BarService;
 import com.project.always.controller.api.BaseControllerTest;
 import com.project.always.utils.HttpResponseEntity;
 import net.minidev.json.JSONObject;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +35,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BarControllerApiTest extends BaseControllerTest {
@@ -44,6 +48,7 @@ public class BarControllerApiTest extends BaseControllerTest {
     private static final Snippet REQUEST_FIELDS = requestFields(
             fieldWithPath("title").type(JsonFieldType.STRING).description("술집이름")
     );
+
     private static final Snippet RESPONSE_FIELDS = responseFields(
             fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공 여부"),
             fieldWithPath("response").type(JsonFieldType.ARRAY).description("응답 데이터 목록"),
@@ -60,8 +65,7 @@ public class BarControllerApiTest extends BaseControllerTest {
             fieldWithPath("response[].hit").type(JsonFieldType.NUMBER).description("조회수"),
             fieldWithPath("error").type(JsonFieldType.NULL).description("에러")
 
-            );
-
+    );
     @Transactional
     @DisplayName("get all bar list")
     @Test
@@ -80,22 +84,17 @@ public class BarControllerApiTest extends BaseControllerTest {
                 .statusCode(HttpStatus.OK.value());
 
     }
+
     @DisplayName("get bar list by title")
     @Test
     void barTitleList_test() throws Exception{
         String title = "g";
-/*
-        net.minidev.json.JSONObject requestBody = new JSONObject();
-        requestBody.put("title", title);
-        List<BarDTO> response = barMapper.toDtoList(barService.findByTitleContaining(title));
-*/
+
 
         given(this.spec)
-                .filter(document(DEFAULT_RESTDOC_PATH,RESPONSE_FIELDS)) // API 문서 관련 필터 추가
+                .filter(document(DEFAULT_RESTDOC_PATH, RESPONSE_FIELDS))// API 문서 관련 필터 추가
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .header("Content-type", "application/json")
-                //.body(response)
-                //.param("title",title)
                 .log().all()
 
                 .when()
@@ -172,7 +171,7 @@ public class BarControllerApiTest extends BaseControllerTest {
                 .statusCode(HttpStatus.OK.value()); // 술집 번호 2인지 확인;
     }
 
-    @DisplayName("get top 3 bar list by location")
+    @DisplayName("get bar list order by rating by location")
     @Test
     void barRatingByLocationList_test() throws Exception{
         given(this.spec)
@@ -188,4 +187,5 @@ public class BarControllerApiTest extends BaseControllerTest {
                 .then()
                 .statusCode(HttpStatus.OK.value()); // 술집 번호 2인지 확인;
     }
+
 }

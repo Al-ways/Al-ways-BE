@@ -2,6 +2,7 @@ drop table if exists community_file;
 drop table if exists file;
 drop table if exists community;
 drop table if exists community_category;
+
 drop table if exists review;
 drop table if exists image;
 drop table if exists tag_bar;
@@ -31,6 +32,10 @@ create table user
 
 insert into user (user_id, email, password, name, auth_provider, oauth2Id,role, profile_image)
 values (1, "test1@naver.com", "test1", "testId1","KAKAO","oauth2IdTest1","ROLE_GUEST","https://test_profile_image");
+insert into user (user_id, email, password, name, auth_provider, oauth2Id,role, profile_image)
+values (2, "test2@naver.com", "test2", "testId2","GOOGLE","oauth2IdTest2","ROLE_GUEST","https://test_profile_image");
+insert into user (user_id, email, password, name, auth_provider, oauth2Id,role, profile_image)
+values (3, "test3@naver.com", "test3", "testId3","NAVER","oauth2IdTest3","ROLE_GUEST","https://test_profile_image");
 
 CREATE TABLE bar_category (
                               CATEGORY_ID   bigint(20)   NOT NULL primary key,
@@ -42,6 +47,7 @@ insert into bar_category(category_id, name) values (3,"호프요리주점");
 insert into bar_category(category_id, name) values (4,"칵테일바");
 insert into bar_category(category_id, name) values (5,"와인바");
 insert into bar_category(category_id, name) values (6,"오뎅바");
+
 
 CREATE TABLE bar (
                      BAR_ID   bigint(20)   NOT NULL auto_increment primary key,
@@ -61,6 +67,7 @@ CREATE TABLE bar (
 
 insert into bar(bar_id,CATEGORY_ID,title,LOCATION,RATING,IMAGE,TEL,lat,log,OPEN_STATUS,group_seat,hit)
 values (1,1,"고부시","서울 강남구 논현동 80-22",5.0,"https://ldb-phinf.pstatic.net/20180531_279/1527725073965wpnIX_JPEG/TAroOfA874YOsnnul2gWw0Az.jpg","02-518-2078","37.51613021","127.0302467","매일",5,5);
+
 insert into bar(bar_id,CATEGORY_ID,title,LOCATION,RATING,IMAGE,TEL,lat,log,OPEN_STATUS,group_seat,hit)
 values (2,2,"꼼주","서울 광진구 화양동 9-50 1층",5.0,"https://ldb-phinf.pstatic.net/20180531_279/1527725073965wpnIX_JPEG/TAroOfA874YOsnnul2gWw0Az.jpg","010-5137-1675","37.54269611","127.069116","매일",5,5);
 insert into bar(bar_id,CATEGORY_ID,title,LOCATION,RATING,IMAGE,TEL,lat,log,OPEN_STATUS,group_seat,hit)
@@ -137,6 +144,7 @@ CREATE TABLE mbti(
                      mbti_id bigint not null auto_increment primary key,
                      name varchar(30) null,
                      pattern varchar(30) null
+
 );
 
 create table user_mbti (
@@ -246,6 +254,7 @@ create table community_file (
                                 file_id   bigint(20)   not null,
                                 foreign key(post_id) references community(post_id),
                                 foreign key(file_id) references file(file_id)
+
 );
 insert into community_category(category_id, name) values (1,'자유게시판');
 insert into community_category(category_id, name) values (2,'분위기 좋은 술집');
@@ -257,3 +266,4 @@ insert into community (post_id,user_id,category_id,title,content) values(2,1,1,'
 
 insert into file (file_id,name,org_name) values(1,'1','https://ldb-phinf.pstatic.net/20180531_279/1527725073965wpnIX_JPEG/TAroOfA874YOsnnul2gWw0Az.jpg');
 insert into community_file(community_file_id, post_id, file_id) values (1,1,1);
+

@@ -1,11 +1,9 @@
 package com.project.always.security.oauth.oauth2;
 
-import com.project.always.security.oauth.dto.UserResponseDto;
+import com.project.always.security.oauth.dto.response.UserResponseDto;
 import com.project.always.security.oauth.lib.CookieUtils;
 import com.project.always.security.oauth.jwt.JwtTokenProvider;
 import com.project.always.security.oauth.repository.CookieAuthorizationRequestRepository;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,6 +32,8 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     private final JwtTokenProvider jwtTokenProvider;
     private final CookieAuthorizationRequestRepository cookieAuthorizationRequestRepository;
 
+    @Value("${app.origin.url}")
+    private String originUrl;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -53,7 +53,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) {
 
-        log.info("success handler response ={} ",response);
 
         Optional<String> redirectUri = CookieUtils.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME)
                 .map(Cookie::getValue);
@@ -66,7 +65,14 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         //JWT 생성
         UserResponseDto tokenInfo = jwtTokenProvider.generateToken(authentication);
 
-        return UriComponentsBuilder.fromUriString("/api/oauth2/kakao/login")
+        // 토큰정보(리프레시토큰, 엑세스토큰) 를 cookie에 저장
+        response.addHeader("Set-Cookie", tokenInfo.getRefreshToken().toString());
+        response.addHeader("Set-Cookie", tokenInfo.getAccessToken().toString());
+
+        // 헤더정보 추가
+        response.addHeader("Authorization", "Bearer " + tokenInfo.getAccessToken());
+
+        return UriComponentsBuilder.fromUriString(originUrl +"/oauth2/redirect")
                 .queryParam("token", tokenInfo.getAccessToken())
                 .build().toUriString();
     }

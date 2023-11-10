@@ -1,4 +1,4 @@
-package com.project.always.survey.domain;
+package com.project.always.mbti.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,23 +13,20 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Survey {
+public class Mbti {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "survey_id")
+    @Column(name = "mbti_id")
     private Long id;
 
-    private String questionText;
+    private String name;
 
-    private String option1;
-
-    private String option2;
+    private String pattern;
 
     @Builder
-    private Survey(final String questionText, final String option1, final String option2) {
-        this.questionText = questionText;
-        this.option1 = option1;
-        this.option2 = option2;
+    private Mbti(final String name, final String pattern) {
+        this.name = name;
+        this.pattern = pattern;
     }
 }

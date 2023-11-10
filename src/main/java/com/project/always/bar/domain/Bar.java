@@ -65,4 +65,9 @@ public class Bar {
         reviews.add(review);
         review.setBar(this);
     }
+  
+    public void setImage(String image) {
+        this.image = image;
+    }
+
 }
