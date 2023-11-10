@@ -65,4 +65,5 @@ public class CommunityController {
     public HttpResponseEntity.ResponseResult<CommunityDTO> getCommunityById(@RequestParam Long communityId){
         return success(communityMapper.toDto(communityService.getCommunityById(communityId)));
     }
+    //category에 따른조회
 }

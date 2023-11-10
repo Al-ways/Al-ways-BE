@@ -88,4 +88,5 @@ class CommunityControllerTest extends BaseControllerTest {
                 .statusCode(HttpStatus.OK.value());
     }
 
+
 }
