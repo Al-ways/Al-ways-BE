@@ -91,7 +91,7 @@ class UserControllerApiTest extends AcceptanceTest {
     }
 
     @Test
-    @DisplayName("사용자는 7가지 설문지를 응답하면, mbti 생성할 수 있다.")
+    @DisplayName("사용자는 6가지 설문지를 응답하면, mbti 생성할 수 있다.")
     @WithMockOAuth2User
     void createUserMbti() throws Exception {
 

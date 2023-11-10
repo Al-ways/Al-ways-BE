@@ -171,29 +171,29 @@ create table user_survey  (
 ) engine=InnoDB;
 
 insert into mbti
-VALUES(1,'사교적 활동가','[1, 1, 1, 1, 1, 1, 1]');
+VALUES(1,'사교적 활동가','[1, 1, 1, 1, 1, 1]');
 insert into mbti
-VALUES(2,'고요한 청년','[1, 1, 1, 1, 1, 1, 2]');
+VALUES(2,'고요한 청년','[1, 1, 1, 1, 1, 2]');
 insert into mbti
-VALUES(3,'탐험가','[1, 1, 1, 1, 1, 2, 1]');
+VALUES(3,'탐험가','[1, 1, 1, 1, 2, 1]');
 insert into mbti
-VALUES(4,'자연 속의 술주인','[1, 1, 1, 1, 1, 2, 2]');
+VALUES(4,'자연 속의 술주인','[1, 1, 1, 1, 2, 2]');
 insert into mbti
-VALUES(5,'감성충만 예술감상가','[1, 1, 1, 1, 2, 1, 1]');
+VALUES(5,'감성충만 예술감상가','[1, 1, 1, 2, 1, 1]');
 insert into mbti
-VALUES(6,'매력적인 인플루언서','[1, 1, 1, 1, 2, 1, 2]');
+VALUES(6,'매력적인 인플루언서','[1, 1, 1, 2, 1, 2]');
 insert into mbti
-VALUES(7,'문화적 탐험가','[1, 1, 1, 1, 2, 2, 1]');
+VALUES(7,'문화적 탐험가','[1, 1, 1, 2, 2, 1]');
 insert into mbti
-VALUES(8,'휴식을 즐기는 로맨티스트','[1, 1, 1, 1, 2, 2, 2]');
+VALUES(8,'휴식을 즐기는 로맨티스트','[1, 1, 1, 2, 2, 2]');
 insert into mbti
-VALUES(9,'음식 중심의 미식가','[1, 1, 1, 2, 1, 1, 1]');
+VALUES(9,'음식 중심의 미식가','[1, 1, 2, 1, 1, 1]');
 insert into mbti
-VALUES(10,'자유로운 예술가','[1, 1, 1, 2, 1, 1, 2]');
+VALUES(10,'자유로운 예술가','[1, 1, 2, 1, 1, 2]');
 insert into mbti
-VALUES(11,'현실주의자','[1, 1, 1, 2, 1, 2, 1]');
+VALUES(11,'현실주의자','[1, 1, 2, 1, 2, 1]');
 insert into mbti
-VALUES(12,'도전과 열정의 미식가','[1, 1, 1, 2, 1, 2, 2]');
+VALUES(12,'도전과 열정의 미식가','[1, 1, 2, 1, 2, 2]');
 
 INSERT into survey
 values(1, '나의 술 모임 성향은?','4인 이상의 술자리가 좋아','4인은 좀.. 3인 이하가 좋아');
@@ -210,6 +210,20 @@ values(6, '술집을 고른다면?','한잔한잔이 고급진 칵테일바','�
 INSERT into survey
 values(7, '당신이 좋아하는 주류?','소주','맥주');
 
+INSERT INTO user_mbti
+values(1,1,1);
+INSERT INTO user_survey
+values(1,1,1,1);
+INSERT INTO user_survey
+values(2,2,1,1);
+INSERT INTO user_survey
+values(3,3,1,1);
+INSERT INTO user_survey
+values(4,4,1,1);
+INSERT INTO user_survey
+values(5,5,1,1);
+INSERT INTO user_survey
+values(6,6,1,1);
 
 create table review (
     review_id bigint(20) not null auto_increment primary key,

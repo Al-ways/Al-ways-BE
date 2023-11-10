@@ -38,10 +38,9 @@ public class UserMbtiService {
 
         List<UserSurvey> allByUser = userSurveyRepository.findAllByUser(user);
 
-        if (allByUser.size() != 7){
-            throw new IllegalArgumentException("7개 문항을 모두 응답해주세요.");
+        if (allByUser.size() != 6){
+            throw new IllegalArgumentException("6개 문항을 모두 응답해주세요.");
         }
-
         Optional<Mbti> byPattern = getByPattern(allByUser);
 
         if (!byPattern.isPresent()) {
