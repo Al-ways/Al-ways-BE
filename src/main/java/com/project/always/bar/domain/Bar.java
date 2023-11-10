@@ -50,6 +50,14 @@ public class Bar {
 
     @OneToMany(mappedBy = "bar")
     private List<TagBar> tagBars = new ArrayList<>();
+    //조회수 올리는 코드
+    public void increaseViewCount(Bar bar){
+        bar.hit++;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
 
 }

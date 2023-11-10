@@ -6,13 +6,18 @@ import com.project.always.bar.mapper.BarMapper;
 import com.project.always.bar.repository.BarRepository;
 import com.project.always.bar.service.BarService;
 import com.project.always.utils.HttpResponseEntity;
+import com.project.always.utils.SuccessResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotBlank;
+import java.io.IOException;
 import java.util.List;
 
 import static com.project.always.utils.HttpResponseEntity.success;
@@ -21,7 +26,6 @@ import static com.project.always.utils.HttpResponseEntity.success;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/bar")
-@Controller
 public class BarController {
 
     private final BarService barService;
@@ -31,6 +35,14 @@ public class BarController {
     public ResponseEntity<List<BarDTO>> getList(){
         List<BarDTO> barDTOList = barMapper.toDtoList(barService.findAll());
         return ResponseEntity.ok(barDTOList);
+    }*/
+    /*@GetMapping("/bytitle")
+    public ResponseEntity<SuccessResponse> findByTitleContaining(@RequestParam @NotBlank String title){
+
+        return ResponseEntity.ok(SuccessResponse.builder()
+                .message("get.user.profileImage.success")
+                .data(barService.findByTitleContaining(title))
+                .build());
     }*/
     @GetMapping("/allbar")
     public HttpResponseEntity.ResponseResult<List<BarDTO>> getList(){
@@ -63,5 +75,37 @@ public class BarController {
         return success(barMapper.toDtoList(barService.getBarsByTagName(tagName)));
     }
 
+    //view count 증가
+    @PostMapping("/increase-view-count")
+    public ResponseEntity<Bar> increaseViewCount(@RequestParam Long barId) {
+        Bar bar = barService.increaseViewCount(barId);
+        if (bar != null) {
+            return ResponseEntity.ok(bar);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     //구별 술집 인기 리스트 구현
+    @GetMapping("/popularity")
+    public HttpResponseEntity.ResponseResult<List<BarDTO>> getTop3BarsByLocationSortedByHit(@RequestParam @NotBlank String location){
+        return success(barMapper.toDtoList(barService.getTop3BarsByLocationSortedByHit(location)));
+    }
+    @GetMapping("/byrating")
+    public HttpResponseEntity.ResponseResult<List<BarDTO>> getBarsByLocationSortedByRating(@RequestParam @NotBlank String location){
+        return success(barMapper.toDtoList(barService.getBarsByLocationSortedByRating(location)));
+    }
+/*
+    @ResponseBody
+    @PostMapping(value="/imagetest",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Long saveBar(HttpServletRequest request, @RequestParam(value = "image") MultipartFile image, Bar bar) throws IOException{
+        log.info("BarController.saveBar");
+        System.out.println("BarController.saveBar");
+        System.out.println("image = " + image);
+        System.out.println("bar = " + bar);
+        Long barId = barService.keepBar(image, bar);
+        return barId;
+    }
+
+ */
 }

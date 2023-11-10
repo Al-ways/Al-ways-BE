@@ -1,4 +1,4 @@
-package com.project.always.security.oauth.dto;
+package com.project.always.security.oauth.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;

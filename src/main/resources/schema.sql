@@ -27,6 +27,10 @@ create table user
 
 insert into user (user_id, email, password, name, auth_provider, oauth2Id,role, profile_image)
 values (1, "test1@naver.com", "test1", "testId1","KAKAO","oauth2IdTest1","ROLE_GUEST","https://test_profile_image");
+insert into user (user_id, email, password, name, auth_provider, oauth2Id,role, profile_image)
+values (2, "test2@naver.com", "test2", "testId2","GOOGLE","oauth2IdTest2","ROLE_GUEST","https://test_profile_image");
+insert into user (user_id, email, password, name, auth_provider, oauth2Id,role, profile_image)
+values (3, "test3@naver.com", "test3", "testId3","NAVER","oauth2IdTest3","ROLE_GUEST","https://test_profile_image");
 
 CREATE TABLE bar_category (
                               CATEGORY_ID   bigint(20)   NOT NULL primary key,
@@ -207,6 +211,5 @@ CREATE TABLE review (
                         FOREIGN KEY (BAR_ID) REFERENCES BAR(BAR_ID),
                         FOREIGN KEY (USER_ID) REFERENCES USER(USER_ID)
 );
-
 
 INSERT INTO review values (1,1,1,5.0,'좋은 분위기 매우 만족합니다.');

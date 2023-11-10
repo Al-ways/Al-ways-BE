@@ -1,47 +1,35 @@
 package com.project.always.security.oauth.controller;
 
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.multipart;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.put;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.restdocs.request.RequestDocumentation.requestParts;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.always.AcceptanceTest;
 import com.project.always.infrastructure.WithMockOAuth2User;
 import com.project.always.security.oauth.dto.request.UserNameRequestDto;
+import com.project.always.security.oauth.dto.request.UserSurveyRequestDto;
 import com.project.always.security.oauth.jwt.JwtTokenProvider;
 import com.project.always.security.oauth.service.CustomOAuth2UserService;
 import com.project.always.security.oauth.service.UserService;
-import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
-import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
-
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
-
-import static org.mockito.BDDMockito.given;
-
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.restdocs.snippet.Snippet;
 import org.springframework.test.web.servlet.ResultActions;
 
-class OauthControllerApiTest extends AcceptanceTest {
-
+class UserControllerApiTest extends AcceptanceTest {
     private static final String BEARER_TYPE = "Bearer ";
 
     private static final Snippet REQUEST_FIELDS = requestFields(
@@ -66,19 +54,20 @@ class OauthControllerApiTest extends AcceptanceTest {
     ObjectMapper objectMapper;
 
     @Test
-    @DisplayName("사용자 이름 변경")
-    @WithMockOAuth2User
-    void modifyName() throws Exception {
+    @DisplayName("사용자는 설문지를 응답할 수 있다.")
+    void createUserSurvey() throws Exception {
 
         // given
-        UserNameRequestDto dto = UserNameRequestDto.builder()
-                .name("김철수").build();
+        UserSurveyRequestDto request = UserSurveyRequestDto.builder()
+                .user_id(2L)
+                .survey_id(1L)
+                .select_option(1)
+                .build();
 
         // when
-        ResultActions result = mockMvc.perform(
-                put("/api/oauth2/user/name")
+        ResultActions result = mockMvc.perform(post("/api/user/survey/select")
                 .header(HttpHeaders.AUTHORIZATION, BEARER_TYPE + "ACCESS_TOKEN")
-                .content(objectMapper.writeValueAsString(dto))
+                .content(objectMapper.writeValueAsString(request))
                 .contentType(MediaType.APPLICATION_JSON)
         );
 
@@ -89,7 +78,9 @@ class OauthControllerApiTest extends AcceptanceTest {
                                 headerWithName(HttpHeaders.AUTHORIZATION).description("액세스 토큰")
                         ),
                         requestFields(
-                                fieldWithPath("name").type(JsonFieldType.STRING).description("사용자 이름")
+                                fieldWithPath("user_id").type(JsonFieldType.NUMBER).description("사용자 번호"),
+                                fieldWithPath("survey_id").type(JsonFieldType.NUMBER).description("설문지 번호"),
+                                fieldWithPath("select_option").type(JsonFieldType.NUMBER).description("선택 옵션")
                         ),
                         responseFields(
                                 fieldWithPath("status").type(JsonFieldType.NUMBER).description("응답 상태 코드"),
@@ -99,19 +90,16 @@ class OauthControllerApiTest extends AcceptanceTest {
                 ));
     }
 
-
     @Test
-    @DisplayName("프로필 이미지 조회 테스트")
+    @DisplayName("사용자는 7가지 설문지를 응답하면, mbti 생성할 수 있다.")
     @WithMockOAuth2User
-    void getProfileImage() throws Exception {
-
-        // given
-        given(userService.getProfileImage(anyLong()))
-                .willReturn(Optional.of("https://image.storage.com/profile/1"));
+    void createUserMbti() throws Exception {
 
         // when
-        ResultActions result = mockMvc.perform(get("/api/oauth2/profile")
-                .header(HttpHeaders.AUTHORIZATION, BEARER_TYPE + "ACCESS_TOKEN"));
+        ResultActions result = mockMvc.perform(post("/api/user/survey/mbti")
+                .header(HttpHeaders.AUTHORIZATION, BEARER_TYPE + "ACCESS_TOKEN")
+                .contentType(MediaType.APPLICATION_JSON)
+        );
 
         // then
         result.andExpect(status().isOk())
@@ -122,45 +110,8 @@ class OauthControllerApiTest extends AcceptanceTest {
                         responseFields(
                                 fieldWithPath("status").type(JsonFieldType.NUMBER).description("응답 상태 코드"),
                                 fieldWithPath("message").type(JsonFieldType.STRING).description("응답 메시지"),
-                                fieldWithPath("data.url").type(JsonFieldType.STRING).description("응답 프로필 url")
+                                fieldWithPath("data").type(JsonFieldType.STRING).description("응답 데이터")
                         )
                 ));
     }
-
-//    @Test
-//    @DisplayName("프로필 이미지 수정 테스트")
-//    @WithMockOAuth2User
-//    void postProfile() throws Exception {
-//
-//        // given
-//        MockMultipartFile image = new MockMultipartFile(
-//                "image", "image.png", "image/png", "image data".getBytes());
-//        given(s3Service.upload(any(MultipartFile.class), eq("profile")))
-//                .willReturn("https://image.storage.com/profile/1");
-//
-//        // when
-//        ResultActions result = mockMvc.perform(multipart("/api/v1/user/profile")
-//                .file(image)
-//                .header(HttpHeaders.AUTHORIZATION, BEARER_TYPE + "ACCESS_TOKEN")
-//                .contentType(MediaType.MULTIPART_FORM_DATA)
-//                .accept(MediaType.APPLICATION_JSON)
-//        );
-//
-//        // then
-//        result.andExpect(status().isCreated())
-//                .andDo(document("member/put-profile",
-//                        requestHeaders(
-//                                headerWithName(HttpHeaders.AUTHORIZATION).description("액세스 토큰")
-//                        ),
-//                        requestParts(
-//                                partWithName("image").description("프로필 이미지")
-//                        ),
-//                        responseFields(
-//                                fieldWithPath("status").description("응답 상태 코드"),
-//                                fieldWithPath("data.url").description("사용자 프로필 이미지 URL")
-//                        )
-//                ));
-//    }
-
-
 }

@@ -9,10 +9,14 @@ import com.project.always.bar.repository.BarCategoryRepository;
 import com.project.always.bar.repository.BarRepository;
 import com.project.always.bar.repository.TagBarRepository;
 import com.project.always.bar.repository.TagRepository;
+import com.project.always.utils.S3Uploader;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +30,9 @@ public class BarService {
     private final BarCategoryRepository barCategoryRepository;
     private final TagRepository tagRepository;
     private final TagBarRepository tagBarRepository;
+
+    @Autowired
+    private S3Uploader s3Uploader;
     @Transactional(readOnly = true)
     public List<Bar> findAll(){ return barRepository.findAll(); };
     @Transactional(readOnly = true)
@@ -66,4 +73,31 @@ public class BarService {
                 .collect(Collectors.toList());
         return bars;
     }
+
+    public Bar increaseViewCount(Long barId) {
+        Bar bar = barRepository.findById(barId).orElse(null);
+        if (bar != null) {
+            bar.increaseViewCount(bar);
+            return barRepository.save(bar);
+        }
+        return null;
+    }
+
+    public List<Bar> getTop3BarsByLocationSortedByHit(String location) {
+        return barRepository.findTop3ByLocationContainingOrderByHitDesc(location);
+    }
+
+    public List<Bar> getBarsByLocationSortedByRating(String location) {
+        return barRepository.findByLocationContainingOrderByRatingDesc(location);
+    }
+    /*
+    @Transactional
+    public Long keepBar(MultipartFile image, Bar bar) throws IOException {
+        if(!image.isEmpty()) {
+            String storedFileName = s3Uploader.upload(image,"images");
+            bar.setImage(storedFileName);
+        }
+        Bar savedBar = barRepository.save(bar);
+        return savedBar.getId();
+    }*/
 }
