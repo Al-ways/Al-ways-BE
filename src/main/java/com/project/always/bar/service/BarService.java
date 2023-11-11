@@ -4,44 +4,50 @@ import com.project.always.bar.domain.Bar;
 import com.project.always.bar.domain.BarCategory;
 import com.project.always.bar.domain.Tag;
 import com.project.always.bar.domain.TagBar;
+import com.project.always.bar.dto.BarDTO;
 import com.project.always.bar.error.exception.BarNotFoundException;
 import com.project.always.bar.repository.BarCategoryRepository;
 import com.project.always.bar.repository.BarRepository;
 import com.project.always.bar.repository.TagBarRepository;
 import com.project.always.bar.repository.TagRepository;
 import com.project.always.utils.S3Uploader;
+import com.project.always.bar.elasticsearch.controller.response.ResponseBarDto;
+import com.project.always.bar.elasticsearch.repository.BarSearchCriteriaQueryRepository;
+import com.project.always.bar.elasticsearch.repository.BarSearchRepository;
+import com.project.always.bar.elasticsearch.controller.request.RequestSearchConditionDto;
+import com.project.always.bar.elasticsearch.domain.BarDocument;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-
+@Transactional(readOnly = true)
 public class BarService {
     private final BarRepository barRepository;
     private final BarCategoryRepository barCategoryRepository;
     private final TagRepository tagRepository;
     private final TagBarRepository tagBarRepository;
 
+    private final BarSearchRepository barSearchRepository;
+    private final BarSearchCriteriaQueryRepository criteriaQueryRepository;
+
+
     @Autowired
     private S3Uploader s3Uploader;
-    @Transactional(readOnly = true)
+
     public List<Bar> findAll(){ return barRepository.findAll(); };
-    @Transactional(readOnly = true)
+
 
     public Bar findByTitle(String barTitle){ return barRepository.findByTitle(barTitle); };
-    @Transactional(readOnly = true)
+
 
     public Bar findById(Long barId){ return barRepository.findById(barId).orElseThrow(()-> new BarNotFoundException("Cannot find BAR"));};
-    @Transactional(readOnly = true)
+
 
     public List<Bar> findByTitleContaining(String title) {
         return barRepository.findByTitleContaining(title);
@@ -100,4 +106,47 @@ public class BarService {
         Bar savedBar = barRepository.save(bar);
         return savedBar.getId();
     }*/
+
+    // barSearch
+    public void saveAll(List<BarDTO> info) {
+        List<BarDocument> users = info.stream()
+                .map(BarDocument::of)
+                .collect(Collectors.toList());
+
+//        barRepository.findAll().stream()
+//                        .map(BarDocument::of)
+//                                .collect(Collectors.toList());
+
+        barSearchRepository.saveAll(users);
+
+
+    }
+
+    @Transactional
+    public void saveSearchAll() {
+        List<BarDocument> collect = barRepository.findAll().stream()
+                .map(Bar::from)
+                .collect(Collectors.toList());
+
+        barSearchRepository.saveAll(collect);
+    }
+
+    public List<ResponseBarDto> findBySearchTitle(String title) {
+        return transInfo(barSearchRepository.findByTitle(title));
+    }
+
+    public List<ResponseBarDto> findBySearchLocation(String location) {
+        return transInfo(barSearchRepository.findByLocation(location));
+    }
+
+    public List<ResponseBarDto> findByCriteriaCondition(RequestSearchConditionDto dto){
+        return transInfo(criteriaQueryRepository.findByCriteriaCondition(dto));
+    }
+
+
+    private List<ResponseBarDto> transInfo(List<BarDocument> bars) {
+        return bars.stream()
+                .map(ResponseBarDto::of)
+                .collect(Collectors.toList());
+    }
 }

@@ -6,18 +6,14 @@ import com.project.always.bar.mapper.BarMapper;
 import com.project.always.bar.repository.BarRepository;
 import com.project.always.bar.service.BarService;
 import com.project.always.utils.HttpResponseEntity;
-import com.project.always.utils.SuccessResponse;
+import com.project.always.bar.elasticsearch.controller.request.RequestSearchConditionDto;
+import com.project.always.bar.elasticsearch.controller.response.ResponseBarDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotBlank;
-import java.io.IOException;
 import java.util.List;
 
 import static com.project.always.utils.HttpResponseEntity.success;
@@ -108,4 +104,28 @@ public class BarController {
     }
 
  */
+
+    //ElasticSearch
+    @PostMapping("/save/document")
+    public ResponseEntity<Void> saveAll(){
+        barService.saveSearchAll();
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/title")
+    ResponseEntity<List<ResponseBarDto>> searchByTitle(@RequestParam String title){
+        return ResponseEntity.ok(barService.findBySearchTitle(title));
+    }
+
+    @GetMapping("/location")
+    ResponseEntity<List<ResponseBarDto>> searchLocation(@RequestParam String location){
+        return ResponseEntity.ok(barService.findBySearchLocation(location));
+    }
+    
+
+    @PostMapping("/criteria/condition")
+    ResponseEntity<List<ResponseBarDto>> searchCriteriaCondition(@RequestBody RequestSearchConditionDto dto){
+        return ResponseEntity.ok(barService.findByCriteriaCondition(dto));
+    }
+
 }

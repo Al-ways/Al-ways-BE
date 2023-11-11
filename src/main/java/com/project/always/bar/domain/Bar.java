@@ -1,11 +1,9 @@
 package com.project.always.bar.domain;
 
-import com.project.always.utils.BaseEntity;
-
+import com.project.always.bar.elasticsearch.domain.BarDocument;
+import java.time.LocalDateTime;
 import javax.persistence.*;
 
-import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -59,5 +57,16 @@ public class Bar {
         this.image = image;
     }
 
-
+    public static BarDocument from(Bar dto) {
+        return BarDocument.builder()
+                .id(dto.getId())
+                .title(dto.getTitle())
+                .location(dto.getLocation())
+                .image(dto.getImage())
+                .startDate(LocalDateTime.now())
+                .endDate(LocalDateTime.now())
+                .tel(dto.getTel())
+                .rating(dto.getRating())
+                .build();
+    }
 }

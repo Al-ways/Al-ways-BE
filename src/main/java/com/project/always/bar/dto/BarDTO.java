@@ -1,6 +1,7 @@
 package com.project.always.bar.dto;
 
-import com.project.always.bar.domain.Bar;
+import com.project.always.bar.elasticsearch.domain.BarDocument;
+import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -50,5 +51,18 @@ public class BarDTO {
         this.open_status = open_status;
         this.group_seat = group_seat;
         this.hit = hit;
+    }
+
+    public static BarDocument from(BarDTO dto) {
+        return BarDocument.builder()
+                .id(dto.getId())
+                .title(dto.getTitle())
+                .location(dto.getLocation())
+                .image(dto.getImage())
+                .startDate(LocalDateTime.now())
+                .endDate(LocalDateTime.now())
+                .tel(dto.getTel())
+                .rating(dto.getRating())
+                .build();
     }
 }
