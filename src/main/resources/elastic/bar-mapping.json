@@ -1,0 +1,21 @@
+{
+  "properties" : {
+    "id" : {
+      "type" : "keyword"},
+    "title" : {
+      "type" : "text",
+      "analyzer" : "korean"},
+    "location" : {
+      "type" : "text",
+      "analyzer" : "korean"},
+    "image" : {
+      "type" : "text"},
+    "tel" : {
+      "type" : "text"},
+    "rating" : {
+      "type" : "double"},
+    "startDate" : {
+      "type" : "date",
+      "format": "uuuu-MM-dd'T'HH:mm:ss.SSS||epoch_millis"}
+   }
+}
