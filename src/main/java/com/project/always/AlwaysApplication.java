@@ -1,6 +1,6 @@
 package com.project.always;
 
-import com.project.always.utils.elasticsearch.repository.BarSearchRepository;
+import com.project.always.bar.elasticsearch.repository.BarSearchRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
